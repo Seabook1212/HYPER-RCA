@@ -1,6 +1,6 @@
 # Sock Shop RCA Benchmark
 
-This package contains the reusable benchmark-side artifacts for the EviRCA microservice root cause analysis study.
+This package contains the reusable benchmark-side artifacts for the HYPER-RCA microservice root cause analysis study.
 
 The benchmark is built around an enhanced Sock Shop system and is designed for reproducible workload generation, controlled fault injection, synchronized telemetry collection, and RCA evaluation over metrics, logs, traces, topology, and structured fault metadata.
 
@@ -19,7 +19,7 @@ Included in this package:
 
 Not stored directly in this Git repository:
 
-- EviRCA framework implementation
+- HYPER-RCA framework implementation
 - full enhanced Sock Shop service source repositories
 - full raw telemetry archives
 - full case-level ground-truth release files
