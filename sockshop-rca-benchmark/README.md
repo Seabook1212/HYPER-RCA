@@ -1,4 +1,4 @@
-# Sock Shop RCA Benchmark
+# EnhancedSockShopBench
 
 This package contains the reusable benchmark-side artifacts for the HYPER-RCA microservice root cause analysis study.
 
@@ -34,7 +34,7 @@ The full telemetry payloads and case-level labels are large, so they are distrib
 - **Fault injection:** Chaos Mesh
 - **Telemetry:** Prometheus metrics, Loki logs, and Jaeger traces
 - **Metric resolution:** predominantly 5 seconds
-- **Metric coverage:** 1,390 selected Prometheus metric signals
+- **Metric coverage:** 1,337 reported distinct metric names; committed inventories may include additional collection candidates
 - **Fault cases:** 320 cases across five experiment days
 - **Normal baselines:** 100 normal runs
 - **Fault actions:** network delay, network loss, network partition, CPU stress, memory stress, pod failure, JVM exception injection, and I/O fault injection
@@ -90,3 +90,11 @@ RCA methods should use the workload and fault timestamps to select case-specific
 Released dataset folder: [Google Drive](https://drive.google.com/drive/folders/1dBNDc2YUYyjJch_BmhO-Hx-0YvdPHHl_?usp=drive_link)
 
 The committed files document and reproduce the benchmark construction and evaluation pipeline, while the dataset folder provides the large telemetry payloads and case-level metadata used by the benchmark.
+
+## Data Sheet and License
+
+- [DATASHEET.md](DATASHEET.md): collection dates, deployment, fault distribution,
+  file and timestamp conventions, evaluation split, and known limitations.
+- [LICENSE-DATA](LICENSE-DATA): CC BY 4.0 for contributor-owned benchmark data,
+  annotations, and original dataset documentation, including the linked archives.
+  This data license does not cover source code or third-party software.

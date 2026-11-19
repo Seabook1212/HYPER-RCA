@@ -1,0 +1,24 @@
+EnhancedSockShopBench Dataset License
+SPDX-License-Identifier: CC-BY-4.0
+
+Copyright (c) 2026 EnhancedSockShopBench contributors.
+
+The benchmark-generated telemetry, run metadata, ground-truth annotations, and
+original dataset documentation released by the EnhancedSockShopBench contributors
+are licensed under the Creative Commons Attribution 4.0 International License
+(CC BY 4.0), unless an individual file states otherwise. This includes dataset
+archives distributed through the download link in this package's README.
+
+The license permits use, copying, redistribution, and adaptation, including for
+commercial purposes, subject to its terms. Give appropriate credit to the creators
+and EnhancedSockShopBench, retain supplied attribution notices, provide a link to
+the license and the source, and indicate changes. Do not imply endorsement.
+
+Source: https://github.com/Seabook1212/HYPER-RCA
+License summary: https://creativecommons.org/licenses/by/4.0/
+Full, governing terms: https://creativecommons.org/licenses/by/4.0/legalcode.en
+
+This notice does not license source code, third-party software, or external
+datasets. Their respective licenses and notices continue to apply. No warranties
+are provided, as specified in CC BY 4.0. The summary above does not replace or
+modify the full license terms.

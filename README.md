@@ -46,3 +46,12 @@ For details, see [`sockshop-rca-benchmark/README.md`](sockshop-rca-benchmark/REA
 ## Dataset
 
 - Released dataset folder: [Google Drive](https://drive.google.com/drive/folders/1dBNDc2YUYyjJch_BmhO-Hx-0YvdPHHl_?usp=drive_link)
+
+## Dataset Documentation and License
+
+The benchmark is named **EnhancedSockShopBench**. Its
+[data sheet](sockshop-rca-benchmark/DATASHEET.md) describes the collection,
+evaluation split, and limitations. Contributor-owned benchmark data and original
+dataset documentation are licensed under
+[CC BY 4.0](sockshop-rca-benchmark/LICENSE-DATA); this license does not cover code
+or third-party software.
