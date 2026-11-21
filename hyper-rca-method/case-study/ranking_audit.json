@@ -1,0 +1,816 @@
+{
+  "case_id": "pod_memory_hog_catalogue_001",
+  "telemetry_day": "2026-03-18",
+  "source_directory": "examples/output_csv_v2_gemini_3_8_flash_0318_run1",
+  "source_sha256": "74548f7a2c05d68a228678279f0e8fd5bb861479afe66dd225c423b14632e7bc",
+  "source_report_sha256": "71b43996ed2bc0e48e6aafe93d7284d3fc5567425e5d63c16fd0a007b393d096",
+  "model": "gemini-3.8-flash",
+  "coarse_order": [
+    "pod:orders-94d48dc8-prbdt:h1",
+    "pod:catalogue-58bdd4d4f9-48jpd:h1",
+    "pod:orders-94d48dc8-prbdt:h2",
+    "pod:session-db-0:h1",
+    "pod:session-db-0:h2",
+    "pod:shipping-66d8f78d5f-wknr9:h1",
+    "pod:shipping-66d8f78d5f-wknr9:h2",
+    "pod:payment-664c4d4c74-xbjhf:h1",
+    "pod:payment-664c4d4c74-xbjhf:h2",
+    "pod:payment-664c4d4c74-xbjhf:h3",
+    "pod:queue-master-5bb5566684-9gkdj:h1",
+    "pod:queue-master-5bb5566684-9gkdj:h2",
+    "pod:carts-5b77c45b65-ks75w:h1",
+    "pod:carts-5b77c45b65-ks75w:h2",
+    "pod:carts-5b77c45b65-z9k6r:h1",
+    "pod:carts-5b77c45b65-z9k6r:h2",
+    "pod:catalogue-58bdd4d4f9-48jpd:h2",
+    "pod:shipping-66d8f78d5f-9rcrc:h1"
+  ],
+  "coarse_candidates": [
+    {
+      "hypothesis_id": "pod:orders-94d48dc8-prbdt:h1",
+      "entity_type": "pod",
+      "entity_name": "orders-94d48dc8-prbdt",
+      "service": "orders",
+      "pod": "orders-94d48dc8-prbdt",
+      "fault_type": "memory_stress",
+      "local_rank": 1,
+      "reasoning": "The pod exhibits sustained, severe memory pressure throughout the observation window, with memory usage exceeding 100% (abnormal value 105.56%, peaking at 105.95% vs baseline 73.65%, z-score 1068.13). High absolute utilization indicates critical memory exhaustion.",
+      "supporting_evidence": [
+        "orders-94d48dc8-prbdt memory_usage_pct sustained increase across all 11 bins, reaching 105.95% (delta 31.90%, z-score 1068.13)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Container OOM kill events or allocation failure logs",
+        "Pod restart or lifecycle termination telemetry"
+      ]
+    },
+    {
+      "hypothesis_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "entity_type": "pod",
+      "entity_name": "catalogue-58bdd4d4f9-48jpd",
+      "service": "catalogue",
+      "pod": "catalogue-58bdd4d4f9-48jpd",
+      "fault_type": "memory_stress",
+      "local_rank": 1,
+      "reasoning": "The pod exhibits a sharp, sustained spike in memory_usage_pct (peaking at 95.17%, relative change +49.17%, z-score 38.58) between 10:51:00 and 10:53:00. This near-exhaustion peak aligns directly with memory pressure.",
+      "supporting_evidence": [
+        "e1: memory_usage_pct sustained increase from 10:51:00 to 10:53:00 peaking at 95.17% (z-score 38.58)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Absence of explicit OOM-kill logs or container restart events confirming termination or dropped allocations"
+      ]
+    },
+    {
+      "hypothesis_id": "pod:orders-94d48dc8-prbdt:h2",
+      "entity_type": "pod",
+      "entity_name": "orders-94d48dc8-prbdt",
+      "service": "orders",
+      "pod": "orders-94d48dc8-prbdt",
+      "fault_type": "cpu_stress",
+      "local_rank": 2,
+      "reasoning": "Intermittent CPU usage spikes were observed (peak 30.98%, z-score 23.52) during the window, but CPU usage remains well below quota/saturation levels (mean abnormal value 7.62%), making CPU stress less likely as the primary root cause.",
+      "supporting_evidence": [
+        "orders-94d48dc8-prbdt cpu_usage_pct increased intermittently in 2/11 bins peaking at 30.98%"
+      ],
+      "contradictory_evidence": [
+        "Absolute CPU usage remains low (mean abnormal 7.62%, peak 30.98%), showing no evidence of CPU quota throttling or saturation"
+      ],
+      "evidence_gaps": [
+        "CPU throttling metrics (container_cpu_cfs_throttled_periods_total)"
+      ]
+    },
+    {
+      "hypothesis_id": "pod:session-db-0:h1",
+      "entity_type": "pod",
+      "entity_name": "session-db-0",
+      "service": "session-db",
+      "pod": "session-db-0",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "reasoning": "Direct evidence indicates a sharp, concurrent isolated spike in both network_rx (peak ~16.8 KB/s, z-score ~111.7) and network_tx (peak ~21.9 KB/s, z-score ~13.95) at 10:49:00. While network traffic surges can occasionally reflect retransmissions or latency-related buffering/queuing delays under degraded network conditions, there are no direct latency metrics or packet drop observations to confirm network delay.",
+      "supporting_evidence": [
+        "e1: network_rx increased sharply to a peak of 16759.67 bytes/sec (z-score 111.69) at 2026-03-18T10:49:00+00:00",
+        "e2: network_tx increased to a peak of 21915.73 bytes/sec (z-score 13.95) at 2026-03-18T10:49:00+00:00"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Missing trace latency or round-trip time measurements between front-end and session-db-0",
+        "Missing TCP retransmission and timeout counters"
+      ]
+    },
+    {
+      "hypothesis_id": "pod:session-db-0:h2",
+      "entity_type": "pod",
+      "entity_name": "session-db-0",
+      "service": "session-db",
+      "pod": "session-db-0",
+      "fault_type": "network_loss",
+      "local_rank": 2,
+      "reasoning": "The isolated spike in network throughput could potentially be associated with packet retransmissions or duplicate transfers following packet loss. However, evidence of actual drops, retries, or connection reset errors is absent.",
+      "supporting_evidence": [
+        "e1: network_rx isolated surge at 2026-03-18T10:49:00+00:00",
+        "e2: network_tx isolated surge at 2026-03-18T10:49:00+00:00"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Missing packet drop, TCP retry, or error rate metrics to establish packet loss"
+      ]
+    },
+    {
+      "hypothesis_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+      "entity_type": "pod",
+      "entity_name": "shipping-66d8f78d5f-wknr9",
+      "service": "shipping",
+      "pod": "shipping-66d8f78d5f-wknr9",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "reasoning": "Direct evidence e1 demonstrates an isolated surge in network_rx (peaking at ~14.3 KB/s, z-score ~74.2) at 10:52:00, which temporally aligns with an isolated p95/p99 latency spike observed upstream on orders-94d48dc8-prbdt (e5). While this could reflect delayed transmissions or bursts of network traffic, direct evidence does not show local latency degradation or packet retransmissions.",
+      "supporting_evidence": [
+        "e1: network_rx isolated spike at 2026-03-18T10:52:00 (peak=14286.9 B/s, zscore=74.19)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Missing direct round-trip or edge latency metrics for shipping-66d8f78d5f-wknr9",
+        "Missing TCP retransmit or trace latency data"
+      ]
+    },
+    {
+      "hypothesis_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+      "entity_type": "pod",
+      "entity_name": "shipping-66d8f78d5f-wknr9",
+      "service": "shipping",
+      "pod": "shipping-66d8f78d5f-wknr9",
+      "fault_type": "network_loss",
+      "local_rank": 2,
+      "reasoning": "An isolated burst in incoming network traffic could indicate packet retransmission bursts or recovered message delivery attempts caused by intermittent packet loss. However, there are no recorded dropped packets, resets, or application errors confirming loss.",
+      "supporting_evidence": [
+        "e1: network_rx isolated spike at 2026-03-18T10:52:00 (peak=14286.9 B/s, zscore=74.19)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Missing packet drop, retry, or socket reset metrics for shipping-66d8f78d5f-wknr9"
+      ]
+    },
+    {
+      "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h1",
+      "entity_type": "pod",
+      "entity_name": "payment-664c4d4c74-xbjhf",
+      "service": "payment",
+      "pod": "payment-664c4d4c74-xbjhf",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "reasoning": "A sharp, isolated burst in incoming network traffic (network_rx reaching 13,280 B/s with a z-score of 64.22) at 10:54:00 indicates an unexpected traffic spike, batching, or retried payload delivery often observed during network latency or buffering issues affecting the ingress path from upstream services.",
+      "supporting_evidence": [
+        "e1: Isolated network_rx spike at 2026-03-18T10:54:00+00:00 reaching 13280.82 bytes/sec (z-score 64.22, baseline mean 1843.71 bytes/sec)."
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Request duration or round-trip trace latency metrics on the orders-to-payment edge to verify transmission delay."
+      ]
+    },
+    {
+      "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h2",
+      "entity_type": "pod",
+      "entity_name": "payment-664c4d4c74-xbjhf",
+      "service": "payment",
+      "pod": "payment-664c4d4c74-xbjhf",
+      "fault_type": "network_loss",
+      "local_rank": 2,
+      "reasoning": "A sudden burst in received network traffic can stem from packet retransmissions or repeated request retries caused by intermittent network packet loss on incoming connections from orders.",
+      "supporting_evidence": [
+        "e1: network_rx surge to 13280.82 bytes/sec at 2026-03-18T10:54:00+00:00 (z-score 64.22) representing an abrupt 41.1% relative increase over baseline."
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "TCP retransmission rates, dropped packet counters, or client retry counts to distinguish loss-induced retries from normal traffic surges."
+      ]
+    },
+    {
+      "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h3",
+      "entity_type": "pod",
+      "entity_name": "payment-664c4d4c74-xbjhf",
+      "service": "payment",
+      "pod": "payment-664c4d4c74-xbjhf",
+      "fault_type": "exception_injection",
+      "local_rank": 3,
+      "reasoning": "Application-level failure or malformed payload injection can produce atypical request patterns or rapid repeated failing calls from upstream services, manifesting locally as an isolated ingress burst.",
+      "supporting_evidence": [
+        "e1: Sudden 1-minute burst in network_rx at 2026-03-18T10:54:00+00:00 (peak z-score 64.22)."
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Application error logs, HTTP response code distributions (e.g., 5xx rate), and trace exception details."
+      ]
+    },
+    {
+      "hypothesis_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+      "entity_type": "pod",
+      "entity_name": "queue-master-5bb5566684-9gkdj",
+      "service": "queue-master",
+      "pod": "queue-master-5bb5566684-9gkdj",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "reasoning": "The target pod displays a sharp, statistically significant spike in inbound network traffic (network_rx z-score 139.57, peaking at 11,983 bytes/sec) isolated to a single 1-minute bin. In a message-queue processing pod communicating with RabbitMQ, bursty incoming traffic or traffic retransmissions often accompany networking anomalies such as network delay or queue-draining flushes.",
+      "supporting_evidence": [
+        "network_rx experienced an isolated surge at 2026-03-18T10:50:00+00:00 with peak absolute value 11983.89 B/s and z-score 139.57 (e1)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Direct round-trip time, edge latency metrics, or TCP retransmission stats to confirm whether network delay induced queue buffering or message delivery delays."
+      ]
+    },
+    {
+      "hypothesis_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+      "entity_type": "pod",
+      "entity_name": "queue-master-5bb5566684-9gkdj",
+      "service": "queue-master",
+      "pod": "queue-master-5bb5566684-9gkdj",
+      "fault_type": "network_loss",
+      "local_rank": 2,
+      "reasoning": "Intermittent packet loss on paths between queue-master and rabbitmq can manifest as sudden bursts of retransmitted traffic and compressed delivery windows once dropped packets are resent, resulting in brief spikes in received traffic (network_rx).",
+      "supporting_evidence": [
+        "network_rx spiked sharply for an isolated 1-minute period (e1)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Packet drop counts, TCP reset metrics, or request failure logs between queue-master and rabbitmq to distinguish packet loss from benign traffic bursts or network delay."
+      ]
+    },
+    {
+      "hypothesis_id": "pod:carts-5b77c45b65-ks75w:h1",
+      "entity_type": "pod",
+      "entity_name": "carts-5b77c45b65-ks75w",
+      "service": "carts",
+      "pod": "carts-5b77c45b65-ks75w",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "reasoning": "Intermittent p99 latency spikes (peaking at ~48.2ms) are observed on the pod across 3 of 11 bins. Network delay is a plausible explanation for increased latency without documented process crashes or saturations.",
+      "supporting_evidence": [
+        "e1: latency_p99 intermittent increase in 3/11 1min bins, peak=48.18ms, peak z-score=765.89"
+      ],
+      "contradictory_evidence": [
+        "e1: Mean abnormal latency (27.90ms) is lower than baseline (31.70ms), and peak absolute latency (48.18ms) remains well within the baseline maximum range (76.5ms)."
+      ],
+      "evidence_gaps": [
+        "No network edge latency, TCP retransmission, or drop telemetry available to confirm network-induced delay."
+      ]
+    },
+    {
+      "hypothesis_id": "pod:carts-5b77c45b65-ks75w:h2",
+      "entity_type": "pod",
+      "entity_name": "carts-5b77c45b65-ks75w",
+      "service": "carts",
+      "pod": "carts-5b77c45b65-ks75w",
+      "fault_type": "cpu_stress",
+      "local_rank": 2,
+      "reasoning": "Elevated tail request latency can be driven by episodic CPU contention or quota throttling at the pod level.",
+      "supporting_evidence": [
+        "e1: latency_p99 elevated intermittently with high peak z-score (765.89)"
+      ],
+      "contradictory_evidence": [
+        "No direct CPU utilization or throttling metrics are reported showing CPU exhaustion."
+      ],
+      "evidence_gaps": [
+        "Missing CPU usage, saturation, and throttling metrics."
+      ]
+    },
+    {
+      "hypothesis_id": "pod:carts-5b77c45b65-z9k6r:h1",
+      "entity_type": "pod",
+      "entity_name": "carts-5b77c45b65-z9k6r",
+      "service": "carts",
+      "pod": "carts-5b77c45b65-z9k6r",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "reasoning": "A burst in latency_p99 was observed starting at 10:55:00 (peak=39.75ms, z-score=457.17), indicating a potential transient communication or processing delay.",
+      "supporting_evidence": [
+        "e2: latency_p99 isolated increase at 10:55:00, peak=39.75ms, peak z-score=457.17"
+      ],
+      "contradictory_evidence": [
+        "e2: Abnormal latency values (peak 39.75ms, max 48.25ms) are well within the baseline maximum (96.31ms), with overall abnormal mean lower than baseline mean."
+      ],
+      "evidence_gaps": [
+        "Missing network edge metrics, round-trip times, and packet drop data."
+      ]
+    },
+    {
+      "hypothesis_id": "pod:carts-5b77c45b65-z9k6r:h2",
+      "entity_type": "pod",
+      "entity_name": "carts-5b77c45b65-z9k6r",
+      "service": "carts",
+      "pod": "carts-5b77c45b65-z9k6r",
+      "fault_type": "cpu_stress",
+      "local_rank": 2,
+      "reasoning": "A sudden tail latency spike at 10:55:00 could be caused by transient CPU scheduling delay or resource throttling.",
+      "supporting_evidence": [
+        "e2: latency_p99 anomaly detected at 10:55:00 with peak z-score=457.17"
+      ],
+      "contradictory_evidence": [
+        "No direct metric of high CPU utilization or container throttling is recorded."
+      ],
+      "evidence_gaps": [
+        "Missing container CPU metrics and throttling counters."
+      ]
+    },
+    {
+      "hypothesis_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+      "entity_type": "pod",
+      "entity_name": "catalogue-58bdd4d4f9-48jpd",
+      "service": "catalogue",
+      "pod": "catalogue-58bdd4d4f9-48jpd",
+      "fault_type": "network_delay",
+      "local_rank": 2,
+      "reasoning": "There is intermittent elevation in latency_p95 alongside an isolated spike in network_rx at 10:48:00. However, absolute latency remains low (peak abnormal value 9.32 ms, well within baseline ranges up to 23.56 ms), making network delay much less plausible as an initiating root cause.",
+      "supporting_evidence": [
+        "e3: latency_p95 intermittent anomaly (peak 8.60 ms, z-score 20.23)",
+        "e2: network_rx isolated spike at 10:48:00 peaking at 17712.90 bytes/sec"
+      ],
+      "contradictory_evidence": [
+        "e3: abnormal latency_p95 max of 9.32 ms is well within baseline maximum (23.56 ms), and overall mean abnormal latency is actually lower than baseline (-18.45%)"
+      ],
+      "evidence_gaps": [
+        "No packet drop, round-trip time, or downstream network metrics confirming injected delay on catalogue network edges"
+      ]
+    },
+    {
+      "hypothesis_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+      "entity_type": "pod",
+      "entity_name": "shipping-66d8f78d5f-9rcrc",
+      "service": "shipping",
+      "pod": "shipping-66d8f78d5f-9rcrc",
+      "fault_type": "cpu_stress",
+      "local_rank": 1,
+      "reasoning": "The target pod shipping-66d8f78d5f-9rcrc displays a slight window shift in cpu_usage_pct from 1.34% to 1.78% (peak 3.26%). However, absolute CPU utilization remains extremely low, indicating that genuine CPU exhaustion or throttling is not occurring. This is the only direct metric anomaly on the pod.",
+      "supporting_evidence": [
+        "cpu_usage_pct on shipping-66d8f78d5f-9rcrc shifted from 1.341% to 1.782% (z-score 1.052, peak 3.26%) between 10:45:30 and 10:55:45 (e1)."
+      ],
+      "contradictory_evidence": [
+        "Absolute CPU utilization maxes out at only 3.26%, far below any saturation or quota threshold that would cause performance degradation."
+      ],
+      "evidence_gaps": [
+        "CPU throttling metrics and container CPU quota saturation telemetry."
+      ]
+    }
+  ],
+  "final_ranking": [
+    {
+      "rank": 1,
+      "hypothesis_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "entity_type": "pod",
+      "entity_name": "catalogue-58bdd4d4f9-48jpd",
+      "service": "catalogue",
+      "pod": "catalogue-58bdd4d4f9-48jpd",
+      "fault_type": "memory_stress",
+      "local_rank": 1,
+      "score": 0.252783,
+      "rationale": "The pod exhibits a sharp, sustained spike in memory_usage_pct (peaking at 95.17%, relative change +49.17%, z-score 38.58) between 10:51:00 and 10:53:00. This near-exhaustion peak aligns directly with memory pressure.",
+      "supporting_evidence": [
+        "e1: memory_usage_pct sustained increase from 10:51:00 to 10:53:00 peaking at 95.17% (z-score 38.58)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Absence of explicit OOM-kill logs or container restart events confirming termination or dropped allocations"
+      ]
+    },
+    {
+      "rank": 2,
+      "hypothesis_id": "pod:orders-94d48dc8-prbdt:h1",
+      "entity_type": "pod",
+      "entity_name": "orders-94d48dc8-prbdt",
+      "service": "orders",
+      "pod": "orders-94d48dc8-prbdt",
+      "fault_type": "memory_stress",
+      "local_rank": 1,
+      "score": 0.198682,
+      "rationale": "The pod exhibits sustained, severe memory pressure throughout the observation window, with memory usage exceeding 100% (abnormal value 105.56%, peaking at 105.95% vs baseline 73.65%, z-score 1068.13). High absolute utilization indicates critical memory exhaustion.",
+      "supporting_evidence": [
+        "orders-94d48dc8-prbdt memory_usage_pct sustained increase across all 11 bins, reaching 105.95% (delta 31.90%, z-score 1068.13)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Container OOM kill events or allocation failure logs",
+        "Pod restart or lifecycle termination telemetry"
+      ]
+    },
+    {
+      "rank": 3,
+      "hypothesis_id": "pod:session-db-0:h1",
+      "entity_type": "pod",
+      "entity_name": "session-db-0",
+      "service": "session-db",
+      "pod": "session-db-0",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "score": 0.109707,
+      "rationale": "Direct evidence indicates a sharp, concurrent isolated spike in both network_rx (peak ~16.8 KB/s, z-score ~111.7) and network_tx (peak ~21.9 KB/s, z-score ~13.95) at 10:49:00. While network traffic surges can occasionally reflect retransmissions or latency-related buffering/queuing delays under degraded network conditions, there are no direct latency metrics or packet drop observations to confirm network delay.",
+      "supporting_evidence": [
+        "e1: network_rx increased sharply to a peak of 16759.67 bytes/sec (z-score 111.69) at 2026-03-18T10:49:00+00:00",
+        "e2: network_tx increased to a peak of 21915.73 bytes/sec (z-score 13.95) at 2026-03-18T10:49:00+00:00"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Missing trace latency or round-trip time measurements between front-end and session-db-0",
+        "Missing TCP retransmission and timeout counters"
+      ]
+    },
+    {
+      "rank": 4,
+      "hypothesis_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+      "entity_type": "pod",
+      "entity_name": "queue-master-5bb5566684-9gkdj",
+      "service": "queue-master",
+      "pod": "queue-master-5bb5566684-9gkdj",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "score": 0.075116,
+      "rationale": "The target pod displays a sharp, statistically significant spike in inbound network traffic (network_rx z-score 139.57, peaking at 11,983 bytes/sec) isolated to a single 1-minute bin. In a message-queue processing pod communicating with RabbitMQ, bursty incoming traffic or traffic retransmissions often accompany networking anomalies such as network delay or queue-draining flushes.",
+      "supporting_evidence": [
+        "network_rx experienced an isolated surge at 2026-03-18T10:50:00+00:00 with peak absolute value 11983.89 B/s and z-score 139.57 (e1)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Direct round-trip time, edge latency metrics, or TCP retransmission stats to confirm whether network delay induced queue buffering or message delivery delays."
+      ]
+    },
+    {
+      "rank": 5,
+      "hypothesis_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+      "entity_type": "pod",
+      "entity_name": "shipping-66d8f78d5f-wknr9",
+      "service": "shipping",
+      "pod": "shipping-66d8f78d5f-wknr9",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "score": 0.057412,
+      "rationale": "Direct evidence e1 demonstrates an isolated surge in network_rx (peaking at ~14.3 KB/s, z-score ~74.2) at 10:52:00, which temporally aligns with an isolated p95/p99 latency spike observed upstream on orders-94d48dc8-prbdt (e5). While this could reflect delayed transmissions or bursts of network traffic, direct evidence does not show local latency degradation or packet retransmissions.",
+      "supporting_evidence": [
+        "e1: network_rx isolated spike at 2026-03-18T10:52:00 (peak=14286.9 B/s, zscore=74.19)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Missing direct round-trip or edge latency metrics for shipping-66d8f78d5f-wknr9",
+        "Missing TCP retransmit or trace latency data"
+      ]
+    },
+    {
+      "rank": 6,
+      "hypothesis_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+      "entity_type": "pod",
+      "entity_name": "queue-master-5bb5566684-9gkdj",
+      "service": "queue-master",
+      "pod": "queue-master-5bb5566684-9gkdj",
+      "fault_type": "network_loss",
+      "local_rank": 2,
+      "score": 0.047149,
+      "rationale": "Intermittent packet loss on paths between queue-master and rabbitmq can manifest as sudden bursts of retransmitted traffic and compressed delivery windows once dropped packets are resent, resulting in brief spikes in received traffic (network_rx).",
+      "supporting_evidence": [
+        "network_rx spiked sharply for an isolated 1-minute period (e1)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Packet drop counts, TCP reset metrics, or request failure logs between queue-master and rabbitmq to distinguish packet loss from benign traffic bursts or network delay."
+      ]
+    },
+    {
+      "rank": 7,
+      "hypothesis_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+      "entity_type": "pod",
+      "entity_name": "catalogue-58bdd4d4f9-48jpd",
+      "service": "catalogue",
+      "pod": "catalogue-58bdd4d4f9-48jpd",
+      "fault_type": "network_delay",
+      "local_rank": 2,
+      "score": 0.038179,
+      "rationale": "There is intermittent elevation in latency_p95 alongside an isolated spike in network_rx at 10:48:00. However, absolute latency remains low (peak abnormal value 9.32 ms, well within baseline ranges up to 23.56 ms), making network delay much less plausible as an initiating root cause.",
+      "supporting_evidence": [
+        "e3: latency_p95 intermittent anomaly (peak 8.60 ms, z-score 20.23)",
+        "e2: network_rx isolated spike at 10:48:00 peaking at 17712.90 bytes/sec"
+      ],
+      "contradictory_evidence": [
+        "e3: abnormal latency_p95 max of 9.32 ms is well within baseline maximum (23.56 ms), and overall mean abnormal latency is actually lower than baseline (-18.45%)"
+      ],
+      "evidence_gaps": [
+        "No packet drop, round-trip time, or downstream network metrics confirming injected delay on catalogue network edges"
+      ]
+    },
+    {
+      "rank": 8,
+      "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h1",
+      "entity_type": "pod",
+      "entity_name": "payment-664c4d4c74-xbjhf",
+      "service": "payment",
+      "pod": "payment-664c4d4c74-xbjhf",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "score": 0.036507,
+      "rationale": "A sharp, isolated burst in incoming network traffic (network_rx reaching 13,280 B/s with a z-score of 64.22) at 10:54:00 indicates an unexpected traffic spike, batching, or retried payload delivery often observed during network latency or buffering issues affecting the ingress path from upstream services.",
+      "supporting_evidence": [
+        "e1: Isolated network_rx spike at 2026-03-18T10:54:00+00:00 reaching 13280.82 bytes/sec (z-score 64.22, baseline mean 1843.71 bytes/sec)."
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Request duration or round-trip trace latency metrics on the orders-to-payment edge to verify transmission delay."
+      ]
+    },
+    {
+      "rank": 9,
+      "hypothesis_id": "pod:carts-5b77c45b65-ks75w:h1",
+      "entity_type": "pod",
+      "entity_name": "carts-5b77c45b65-ks75w",
+      "service": "carts",
+      "pod": "carts-5b77c45b65-ks75w",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "score": 0.032658,
+      "rationale": "Intermittent p99 latency spikes (peaking at ~48.2ms) are observed on the pod across 3 of 11 bins. Network delay is a plausible explanation for increased latency without documented process crashes or saturations.",
+      "supporting_evidence": [
+        "e1: latency_p99 intermittent increase in 3/11 1min bins, peak=48.18ms, peak z-score=765.89"
+      ],
+      "contradictory_evidence": [
+        "e1: Mean abnormal latency (27.90ms) is lower than baseline (31.70ms), and peak absolute latency (48.18ms) remains well within the baseline maximum range (76.5ms)."
+      ],
+      "evidence_gaps": [
+        "No network edge latency, TCP retransmission, or drop telemetry available to confirm network-induced delay."
+      ]
+    },
+    {
+      "rank": 10,
+      "hypothesis_id": "pod:carts-5b77c45b65-z9k6r:h1",
+      "entity_type": "pod",
+      "entity_name": "carts-5b77c45b65-z9k6r",
+      "service": "carts",
+      "pod": "carts-5b77c45b65-z9k6r",
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "score": 0.032041,
+      "rationale": "A burst in latency_p99 was observed starting at 10:55:00 (peak=39.75ms, z-score=457.17), indicating a potential transient communication or processing delay.",
+      "supporting_evidence": [
+        "e2: latency_p99 isolated increase at 10:55:00, peak=39.75ms, peak z-score=457.17"
+      ],
+      "contradictory_evidence": [
+        "e2: Abnormal latency values (peak 39.75ms, max 48.25ms) are well within the baseline maximum (96.31ms), with overall abnormal mean lower than baseline mean."
+      ],
+      "evidence_gaps": [
+        "Missing network edge metrics, round-trip times, and packet drop data."
+      ]
+    },
+    {
+      "rank": 11,
+      "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h2",
+      "entity_type": "pod",
+      "entity_name": "payment-664c4d4c74-xbjhf",
+      "service": "payment",
+      "pod": "payment-664c4d4c74-xbjhf",
+      "fault_type": "network_loss",
+      "local_rank": 2,
+      "score": 0.020872,
+      "rationale": "A sudden burst in received network traffic can stem from packet retransmissions or repeated request retries caused by intermittent network packet loss on incoming connections from orders.",
+      "supporting_evidence": [
+        "e1: network_rx surge to 13280.82 bytes/sec at 2026-03-18T10:54:00+00:00 (z-score 64.22) representing an abrupt 41.1% relative increase over baseline."
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "TCP retransmission rates, dropped packet counters, or client retry counts to distinguish loss-induced retries from normal traffic surges."
+      ]
+    },
+    {
+      "rank": 12,
+      "hypothesis_id": "pod:carts-5b77c45b65-z9k6r:h2",
+      "entity_type": "pod",
+      "entity_name": "carts-5b77c45b65-z9k6r",
+      "service": "carts",
+      "pod": "carts-5b77c45b65-z9k6r",
+      "fault_type": "cpu_stress",
+      "local_rank": 2,
+      "score": 0.020378,
+      "rationale": "A sudden tail latency spike at 10:55:00 could be caused by transient CPU scheduling delay or resource throttling.",
+      "supporting_evidence": [
+        "e2: latency_p99 anomaly detected at 10:55:00 with peak z-score=457.17"
+      ],
+      "contradictory_evidence": [
+        "No direct metric of high CPU utilization or container throttling is recorded."
+      ],
+      "evidence_gaps": [
+        "Missing container CPU metrics and throttling counters."
+      ]
+    },
+    {
+      "rank": 13,
+      "hypothesis_id": "pod:session-db-0:h2",
+      "entity_type": "pod",
+      "entity_name": "session-db-0",
+      "service": "session-db",
+      "pod": "session-db-0",
+      "fault_type": "network_loss",
+      "local_rank": 2,
+      "score": 0.019052,
+      "rationale": "The isolated spike in network throughput could potentially be associated with packet retransmissions or duplicate transfers following packet loss. However, evidence of actual drops, retries, or connection reset errors is absent.",
+      "supporting_evidence": [
+        "e1: network_rx isolated surge at 2026-03-18T10:49:00+00:00",
+        "e2: network_tx isolated surge at 2026-03-18T10:49:00+00:00"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Missing packet drop, TCP retry, or error rate metrics to establish packet loss"
+      ]
+    },
+    {
+      "rank": 14,
+      "hypothesis_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+      "entity_type": "pod",
+      "entity_name": "shipping-66d8f78d5f-wknr9",
+      "service": "shipping",
+      "pod": "shipping-66d8f78d5f-wknr9",
+      "fault_type": "network_loss",
+      "local_rank": 2,
+      "score": 0.016204,
+      "rationale": "An isolated burst in incoming network traffic could indicate packet retransmission bursts or recovered message delivery attempts caused by intermittent packet loss. However, there are no recorded dropped packets, resets, or application errors confirming loss.",
+      "supporting_evidence": [
+        "e1: network_rx isolated spike at 2026-03-18T10:52:00 (peak=14286.9 B/s, zscore=74.19)"
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Missing packet drop, retry, or socket reset metrics for shipping-66d8f78d5f-wknr9"
+      ]
+    },
+    {
+      "rank": 15,
+      "hypothesis_id": "pod:orders-94d48dc8-prbdt:h2",
+      "entity_type": "pod",
+      "entity_name": "orders-94d48dc8-prbdt",
+      "service": "orders",
+      "pod": "orders-94d48dc8-prbdt",
+      "fault_type": "cpu_stress",
+      "local_rank": 2,
+      "score": 0.013019,
+      "rationale": "Intermittent CPU usage spikes were observed (peak 30.98%, z-score 23.52) during the window, but CPU usage remains well below quota/saturation levels (mean abnormal value 7.62%), making CPU stress less likely as the primary root cause.",
+      "supporting_evidence": [
+        "orders-94d48dc8-prbdt cpu_usage_pct increased intermittently in 2/11 bins peaking at 30.98%"
+      ],
+      "contradictory_evidence": [
+        "Absolute CPU usage remains low (mean abnormal 7.62%, peak 30.98%), showing no evidence of CPU quota throttling or saturation"
+      ],
+      "evidence_gaps": [
+        "CPU throttling metrics (container_cpu_cfs_throttled_periods_total)"
+      ]
+    },
+    {
+      "rank": 16,
+      "hypothesis_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+      "entity_type": "pod",
+      "entity_name": "shipping-66d8f78d5f-9rcrc",
+      "service": "shipping",
+      "pod": "shipping-66d8f78d5f-9rcrc",
+      "fault_type": "cpu_stress",
+      "local_rank": 1,
+      "score": 0.012794,
+      "rationale": "The target pod shipping-66d8f78d5f-9rcrc displays a slight window shift in cpu_usage_pct from 1.34% to 1.78% (peak 3.26%). However, absolute CPU utilization remains extremely low, indicating that genuine CPU exhaustion or throttling is not occurring. This is the only direct metric anomaly on the pod.",
+      "supporting_evidence": [
+        "cpu_usage_pct on shipping-66d8f78d5f-9rcrc shifted from 1.341% to 1.782% (z-score 1.052, peak 3.26%) between 10:45:30 and 10:55:45 (e1)."
+      ],
+      "contradictory_evidence": [
+        "Absolute CPU utilization maxes out at only 3.26%, far below any saturation or quota threshold that would cause performance degradation."
+      ],
+      "evidence_gaps": [
+        "CPU throttling metrics and container CPU quota saturation telemetry."
+      ]
+    },
+    {
+      "rank": 17,
+      "hypothesis_id": "pod:carts-5b77c45b65-ks75w:h2",
+      "entity_type": "pod",
+      "entity_name": "carts-5b77c45b65-ks75w",
+      "service": "carts",
+      "pod": "carts-5b77c45b65-ks75w",
+      "fault_type": "cpu_stress",
+      "local_rank": 2,
+      "score": 0.008929,
+      "rationale": "Elevated tail request latency can be driven by episodic CPU contention or quota throttling at the pod level.",
+      "supporting_evidence": [
+        "e1: latency_p99 elevated intermittently with high peak z-score (765.89)"
+      ],
+      "contradictory_evidence": [
+        "No direct CPU utilization or throttling metrics are reported showing CPU exhaustion."
+      ],
+      "evidence_gaps": [
+        "Missing CPU usage, saturation, and throttling metrics."
+      ]
+    },
+    {
+      "rank": 18,
+      "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h3",
+      "entity_type": "pod",
+      "entity_name": "payment-664c4d4c74-xbjhf",
+      "service": "payment",
+      "pod": "payment-664c4d4c74-xbjhf",
+      "fault_type": "exception_injection",
+      "local_rank": 3,
+      "score": 0.008519,
+      "rationale": "Application-level failure or malformed payload injection can produce atypical request patterns or rapid repeated failing calls from upstream services, manifesting locally as an isolated ingress burst.",
+      "supporting_evidence": [
+        "e1: Sudden 1-minute burst in network_rx at 2026-03-18T10:54:00+00:00 (peak z-score 64.22)."
+      ],
+      "contradictory_evidence": [],
+      "evidence_gaps": [
+        "Application error logs, HTTP response code distributions (e.g., 5xx rate), and trace exception details."
+      ]
+    }
+  ],
+  "decisive_pairwise_judgments": [
+    {
+      "left_id": "pod:orders-94d48dc8-prbdt:h1",
+      "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "reason": "",
+      "valid_judgment": true,
+      "repetition": 1,
+      "order_reversed": false,
+      "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:orders-94d48dc8-prbdt:h1",
+      "selection_reasons": [
+        "coarse_rank_window"
+      ]
+    },
+    {
+      "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "right_id": "pod:orders-94d48dc8-prbdt:h1",
+      "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "reason": "",
+      "valid_judgment": true,
+      "repetition": 2,
+      "order_reversed": true,
+      "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:orders-94d48dc8-prbdt:h1",
+      "selection_reasons": [
+        "coarse_rank_window"
+      ]
+    }
+  ],
+  "guarded_bt_judgments": [
+    {
+      "left_id": "pod:orders-94d48dc8-prbdt:h1",
+      "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "entity_fit_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "fault_type_fit_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "overall_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "decisive_evidence_refs": [
+        "e2.d1",
+        "e1.d2"
+      ],
+      "invalid_decisive_evidence_refs": [],
+      "unresolved_evidence_gap": false,
+      "missing_discriminator": "",
+      "valid_judgment": true,
+      "repetition": 1,
+      "order_reversed": false
+    },
+    {
+      "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "right_id": "pod:orders-94d48dc8-prbdt:h1",
+      "entity_fit_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "fault_type_fit_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "overall_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "decisive_evidence_refs": [
+        "e2.d1",
+        "e1.d2"
+      ],
+      "invalid_decisive_evidence_refs": [],
+      "unresolved_evidence_gap": false,
+      "missing_discriminator": "",
+      "valid_judgment": true,
+      "repetition": 2,
+      "order_reversed": true
+    }
+  ],
+  "refinement_rounds": 0,
+  "bt_replay_parameters": {
+    "regularization": 0.1,
+    "iterations": 250,
+    "learning_rate": 0.2,
+    "pairwise_repetitions": 2,
+    "reverse_order_on_repeat": true
+  },
+  "parameter_provenance": "Current RankAgent defaults; offline refit verified against all saved rounded BT scores. Historical parameter snapshot was not recorded in full.",
+  "record_availability": {
+    "structured_result": true,
+    "pairwise_judgments": true,
+    "guarded_judgments": true,
+    "logical_call_completion_order": true,
+    "exact_request_start_order": false,
+    "exact_prompts": false,
+    "raw_model_responses": false
+  },
+  "redacted_local_path_fields": [
+    "/metadata/dataset_provenance/fault_workload_metadata",
+    "/metadata/dataset_provenance/normal_workload_metadata",
+    "/metadata/telemetry_input/telemetry_dir",
+    "/metadata/telemetry_input/inputs/metrics_baseline/partitions/0",
+    "/metadata/telemetry_input/inputs/metrics_baseline/partitions/1",
+    "/metadata/telemetry_input/inputs/metrics_abnormal/partitions/0",
+    "/metadata/telemetry_input/inputs/logs_baseline/partitions/0",
+    "/metadata/telemetry_input/inputs/logs_baseline/partitions/1",
+    "/metadata/telemetry_input/inputs/logs_abnormal/partitions/0",
+    "/metadata/telemetry_input/inputs/traces_baseline/partitions/0",
+    "/metadata/telemetry_input/inputs/traces_baseline/partitions/1",
+    "/metadata/telemetry_input/inputs/traces_abnormal/partitions/0"
+  ]
+}

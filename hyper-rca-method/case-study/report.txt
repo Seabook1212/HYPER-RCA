@@ -1,0 +1,69 @@
+Incident: pod_memory_hog_catalogue_001
+Summary: Most likely root cause is pod catalogue-58bdd4d4f9-48jpd with memory_stress.
+
+LLM: gemini/gemini-3.8-flash
+LLM calls: 24 total, 24 successful, 0 failed, 2 retried
+LLM token usage (case total):
+- Prompt tokens: 151,636
+- Output tokens: 8,550
+- Thought/reasoning tokens: 0
+- Cached tokens: 0
+- Total tokens: 160,186
+LLM usage by stage (cumulative call time):
+- rank: 10 calls, 426.535s, 107,650 tokens
+- hypothesis: 14 calls, 172.940s, 52,536 tokens
+
+Hypothesis candidate coverage: 9/11 Pods
+Hypothesis concurrency: 8 workers
+Candidate-uncovered Pods: user-5c64496568-7jpx8, user-5c64496568-xj5vk
+
+Refinement: enabled (0 rounds)
+Refinement query budgets: log=0/2, metric=0/2, trace=0/2
+
+Ranking engine: regularized_bradley_terry (68 selected pairs, 68 effective pairs, 136 response slots, 0 incomplete pairs)
+Guarded BT adjudication: challenger_accepted (listwise=pod:orders-94d48dc8-prbdt:h1, BT challenger=pod:catalogue-58bdd4d4f9-48jpd:h1)
+Ranking validity: complete
+Rank request payloads: listwise=36.1 KiB, largest pair batch=37.8 KiB, guard=23.4 KiB, total=0.23 MiB
+Pairwise order balancing: enabled (3 inconsistent pairs)
+Pairwise concurrency: 8 workers
+Pair selection: window=48, same-entity=10, adaptive-anchor=19
+Pairwise refinement reuse: reused=0, newly evaluated=68
+Anchor calibration: anchors=3, rounds=2/2, final-closure-pairs=0, closure=complete
+
+Timing:
+- Internal processing time (CSV/API processing + algorithms): 46.375s
+- LLM wall time (parallel-aware, including retries): 437.613s
+- LLM cumulative call time: 599.475s
+- LLM transport time (cumulative across calls): 510.908s
+- LLM retry/client overhead (cumulative): 88.567s
+- Algorithm + LLM: 483.988s
+- External telemetry fetch time: 0.000s
+- Total wall time: 483.988s
+
+Service hypotheses:
+- catalogue: memory_stress (0.25)
+- orders: memory_stress (0.20)
+- session-db: network_delay (0.11)
+- queue-master: network_delay (0.08)
+- shipping: network_delay (0.06)
+
+Pod hypotheses:
+- catalogue-58bdd4d4f9-48jpd: memory_stress (0.25)
+- orders-94d48dc8-prbdt: memory_stress (0.20)
+- session-db-0: network_delay (0.11)
+- queue-master-5bb5566684-9gkdj: network_delay (0.08)
+- shipping-66d8f78d5f-wknr9: network_delay (0.06)
+
+Top services:
+1. catalogue (0.25)
+2. orders (0.20)
+3. session-db (0.11)
+4. queue-master (0.08)
+5. shipping (0.06)
+
+Top pods:
+1. catalogue-58bdd4d4f9-48jpd (0.25)
+2. orders-94d48dc8-prbdt (0.20)
+3. session-db-0 (0.11)
+4. queue-master-5bb5566684-9gkdj (0.08)
+5. shipping-66d8f78d5f-wknr9 (0.06)

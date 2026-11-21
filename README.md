@@ -1,12 +1,12 @@
 # HYPER-RCA Artifact Repository
 
-This repository contains the benchmark artifact associated with **HYPER-RCA**, a study on evidence-aware LLM-agent-based microservice root cause analysis and telemetry-rich RCA benchmarking.
+This repository contains benchmark assets and method-inspection artifacts associated with **HYPER-RCA**, a study on evidence-grounded multi-agent microservice root cause analysis and telemetry-rich RCA benchmarking.
 
-The benchmark package is under [`sockshop-rca-benchmark/`](sockshop-rca-benchmark/). It provides the reusable experiment assets used to construct and evaluate the enhanced Sock Shop RCA benchmark. The released dataset folder is linked below.
+The benchmark package is under [`sockshop-rca-benchmark/`](sockshop-rca-benchmark/). Prompt templates, a pairwise/BT case study, a genuine historical LLM I/O sample, and trace-capture tools are under [`hyper-rca-method/`](hyper-rca-method/). The released dataset folder is linked below.
 
 ## Artifact Scope
 
-This repository focuses on benchmark-side materials:
+This repository provides benchmark assets and compact method-inspection materials:
 
 - workload generation assets for the enhanced Sock Shop benchmark
 - fault orchestration and Chaos Mesh fault specifications
@@ -14,8 +14,10 @@ This repository focuses on benchmark-side materials:
 - metric-type inventories and service-topology metadata
 - baseline RCA runners and compact reproduced result summaries
 - documentation describing the benchmark layout and dataset organization
+- source-derived prompt templates and a verifiable pairwise/BT case study
+- one historical raw request/response example and a recorder for future full-case traces
 
-The HYPER-RCA framework implementation is not included in this repository.
+The complete runnable HYPER-RCA framework is not included. The method artifact explicitly distinguishes current template scaffolds, saved structured predictions, and historical raw LLM I/O; the released case study does not have a complete historical raw transcript.
 
 The enhanced Sock Shop service implementations and large telemetry payloads are not duplicated directly in this Git repository. Ground-truth labels are represented by the fault metadata schema and evaluation scripts, and the released dataset folder provides the dataset payloads used by the benchmark.
 
@@ -31,6 +33,9 @@ The artifact corresponds to the benchmark described in the paper:
 - labels: service-, pod-, service-fault-, and pod-fault-level RCA evaluation targets derived from structured fault metadata
 
 ## Repository Layout
+
+- [`hyper-rca-method/`](hyper-rca-method/)
+  - prompt templates, catalogue memory-fault case study, historical I/O sample, and offline verification/capture tools
 
 - [`sockshop-rca-benchmark/benchmark/`](sockshop-rca-benchmark/benchmark/)
   - workload generation, orchestration, chaos definitions, telemetry collection, topology, and metadata

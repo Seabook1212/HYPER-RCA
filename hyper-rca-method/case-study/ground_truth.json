@@ -1,0 +1,20 @@
+{
+  "use": "offline evaluation only; not an LLM input",
+  "source": "fault_info/fault_metadata.json",
+  "source_sha256": "10f019be31d08c3ee597215cc96d654b40343ceb7f4c4126bd2a2c0f1a092d10",
+  "fault_type_catalog_id": "memory_stress",
+  "metadata": {
+    "fault_id": "pod_memory_hog_catalogue_001",
+    "injection_tool": "chaosmesh",
+    "injection_info": {
+      "fault_type": "stresschaos",
+      "inject_start": "2026-03-18T10:50:22Z",
+      "service": "catalogue",
+      "duration": "180s",
+      "memory_workers": 1,
+      "memory_size": "60M",
+      "mode": "one",
+      "pod": "catalogue-58bdd4d4f9-48jpd"
+    }
+  }
+}

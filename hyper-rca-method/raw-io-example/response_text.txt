@@ -1,0 +1,38 @@
+[
+  {
+    "fault_type": "network_delay",
+    "reasoning": "The pod exhibits a significant spike in p99 latency (z-score 808) starting at 08:34, which is also reflected in the upstream front-end service. This pattern is characteristic of added latency in the network path or request processing. The peer pod orders-94d48dc8-9smxp also shows a latency spike at 08:34, suggesting a shared cause or service-wide impact.",
+    "supporting_evidence": [
+      "direct_evidence: latency_profile (p99 sustained 08:34-08:35)",
+      "related_evidence: front-end-65f844fc76-s269x latency_p99 increase at 08:34"
+    ],
+    "contradictory_evidence": [],
+    "evidence_gaps": [
+      "Hop-by-hop network latency or RTT measurements to distinguish path delay from application-level slowness."
+    ]
+  },
+  {
+    "fault_type": "network_loss",
+    "reasoning": "The p99 latency spike at 08:34, followed by an isolated burst in network_rx at 08:35, is consistent with packet loss causing TCP retransmissions and head-of-line blocking. The downstream shipping service also shows a network_rx increase at 08:35, which may indicate propagated retry traffic.",
+    "supporting_evidence": [
+      "direct_evidence: latency_profile (p99 sustained 08:34-08:35)",
+      "direct_evidence: network_rx increase at 08:35",
+      "related_evidence: shipping-66d8f78d5f-n8lvv network_rx increase at 08:35"
+    ],
+    "contradictory_evidence": [],
+    "evidence_gaps": [
+      "TCP retransmission counts or packet loss metrics."
+    ]
+  },
+  {
+    "fault_type": "cpu_stress",
+    "reasoning": "Excessive CPU demand or throttling can lead to increased processing time for requests, manifesting as higher tail latency (p99). While direct CPU metrics are unavailable, this remains a plausible cause for the observed latency profile, especially if shared node resources were under pressure.",
+    "supporting_evidence": [
+      "direct_evidence: latency_profile (p99 sustained 08:34-08:35)"
+    ],
+    "contradictory_evidence": [],
+    "evidence_gaps": [
+      "CPU utilization, saturation, or throttling metrics."
+    ]
+  }
+]

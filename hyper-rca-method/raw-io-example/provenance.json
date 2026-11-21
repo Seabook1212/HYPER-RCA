@@ -1,0 +1,11 @@
+{
+  "source_log_sha256": "ae469f4773ac5ba6ba2f1bc4594151d7a425206f12138576f77b18b8bfc122ef",
+  "purpose": "hypothesis:pod:orders-94d48dc8-7xwrn",
+  "model": "gemini-3-flash-preview",
+  "request_timestamp_as_logged": "2026-10-21 23:14:18,287",
+  "response_timestamp_as_logged": "2026-10-21 23:18:15,160",
+  "timestamp_timezone": "not recorded in source log",
+  "scope": "One complete request/response transaction from a partial historical log; not a complete case and not the catalogue case study.",
+  "response_format": "Unmodified model text in text; model_version and usage_metadata as logged. Not a full provider HTTP/SDK response.",
+  "historical_template": "Older than the current template snapshot; do not treat as a current-template evaluation."
+}

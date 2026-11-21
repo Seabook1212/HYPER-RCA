@@ -1,0 +1,4237 @@
+{
+  "incident_id": "pod_memory_hog_catalogue_001",
+  "abnormal_window": {
+    "start": "2026-03-18T10:45:27.453296+00:00",
+    "end": "2026-03-18T10:55:47.453296+00:00"
+  },
+  "baseline_window": {
+    "start": "2026-03-18T05:52:10.988444+00:00",
+    "end": "2026-03-18T06:02:30.988444+00:00"
+  },
+  "service_top5": [
+    {
+      "score": 0.252783,
+      "fault_type": "memory_stress",
+      "local_rank": 1,
+      "supporting_evidence": [
+        "e1: memory_usage_pct sustained increase from 10:51:00 to 10:53:00 peaking at 95.17% (z-score 38.58)"
+      ],
+      "notes": "Derived from highest-ranked Pod candidate catalogue-58bdd4d4f9-48jpd. The pod exhibits a sharp, sustained spike in memory_usage_pct (peaking at 95.17%, relative change +49.17%, z-score 38.58) between 10:51:00 and 10:53:00. This near-exhaustion peak aligns directly with memory pressure.",
+      "service": "catalogue",
+      "pod": "catalogue-58bdd4d4f9-48jpd"
+    },
+    {
+      "score": 0.198682,
+      "fault_type": "memory_stress",
+      "local_rank": 1,
+      "supporting_evidence": [
+        "orders-94d48dc8-prbdt memory_usage_pct sustained increase across all 11 bins, reaching 105.95% (delta 31.90%, z-score 1068.13)"
+      ],
+      "notes": "Derived from highest-ranked Pod candidate orders-94d48dc8-prbdt. The pod exhibits sustained, severe memory pressure throughout the observation window, with memory usage exceeding 100% (abnormal value 105.56%, peaking at 105.95% vs baseline 73.65%, z-score 1068.13). High absolute utilization indicates critical memory exhaustion.",
+      "service": "orders",
+      "pod": "orders-94d48dc8-prbdt"
+    },
+    {
+      "score": 0.109707,
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "supporting_evidence": [
+        "e1: network_rx increased sharply to a peak of 16759.67 bytes/sec (z-score 111.69) at 2026-03-18T10:49:00+00:00",
+        "e2: network_tx increased to a peak of 21915.73 bytes/sec (z-score 13.95) at 2026-03-18T10:49:00+00:00"
+      ],
+      "notes": "Derived from highest-ranked Pod candidate session-db-0. Direct evidence indicates a sharp, concurrent isolated spike in both network_rx (peak ~16.8 KB/s, z-score ~111.7) and network_tx (peak ~21.9 KB/s, z-score ~13.95) at 10:49:00. While network traffic surges can occasionally reflect retransmissions or latency-related buffering/queuing delays under degraded network conditions, there are no direct latency metrics or packet drop observations to confirm network delay.",
+      "service": "session-db",
+      "pod": "session-db-0"
+    },
+    {
+      "score": 0.075116,
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "supporting_evidence": [
+        "network_rx experienced an isolated surge at 2026-03-18T10:50:00+00:00 with peak absolute value 11983.89 B/s and z-score 139.57 (e1)"
+      ],
+      "notes": "Derived from highest-ranked Pod candidate queue-master-5bb5566684-9gkdj. The target pod displays a sharp, statistically significant spike in inbound network traffic (network_rx z-score 139.57, peaking at 11,983 bytes/sec) isolated to a single 1-minute bin. In a message-queue processing pod communicating with RabbitMQ, bursty incoming traffic or traffic retransmissions often accompany networking anomalies such as network delay or queue-draining flushes.",
+      "service": "queue-master",
+      "pod": "queue-master-5bb5566684-9gkdj"
+    },
+    {
+      "score": 0.057412,
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "supporting_evidence": [
+        "e1: network_rx isolated spike at 2026-03-18T10:52:00 (peak=14286.9 B/s, zscore=74.19)"
+      ],
+      "notes": "Derived from highest-ranked Pod candidate shipping-66d8f78d5f-wknr9. Direct evidence e1 demonstrates an isolated surge in network_rx (peaking at ~14.3 KB/s, z-score ~74.2) at 10:52:00, which temporally aligns with an isolated p95/p99 latency spike observed upstream on orders-94d48dc8-prbdt (e5). While this could reflect delayed transmissions or bursts of network traffic, direct evidence does not show local latency degradation or packet retransmissions.",
+      "service": "shipping",
+      "pod": "shipping-66d8f78d5f-wknr9"
+    }
+  ],
+  "pod_top5": [
+    {
+      "score": 0.252783,
+      "fault_type": "memory_stress",
+      "local_rank": 1,
+      "supporting_evidence": [
+        "e1: memory_usage_pct sustained increase from 10:51:00 to 10:53:00 peaking at 95.17% (z-score 38.58)"
+      ],
+      "notes": "The pod exhibits a sharp, sustained spike in memory_usage_pct (peaking at 95.17%, relative change +49.17%, z-score 38.58) between 10:51:00 and 10:53:00. This near-exhaustion peak aligns directly with memory pressure.",
+      "service": "catalogue",
+      "pod": "catalogue-58bdd4d4f9-48jpd"
+    },
+    {
+      "score": 0.198682,
+      "fault_type": "memory_stress",
+      "local_rank": 1,
+      "supporting_evidence": [
+        "orders-94d48dc8-prbdt memory_usage_pct sustained increase across all 11 bins, reaching 105.95% (delta 31.90%, z-score 1068.13)"
+      ],
+      "notes": "The pod exhibits sustained, severe memory pressure throughout the observation window, with memory usage exceeding 100% (abnormal value 105.56%, peaking at 105.95% vs baseline 73.65%, z-score 1068.13). High absolute utilization indicates critical memory exhaustion.",
+      "service": "orders",
+      "pod": "orders-94d48dc8-prbdt"
+    },
+    {
+      "score": 0.109707,
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "supporting_evidence": [
+        "e1: network_rx increased sharply to a peak of 16759.67 bytes/sec (z-score 111.69) at 2026-03-18T10:49:00+00:00",
+        "e2: network_tx increased to a peak of 21915.73 bytes/sec (z-score 13.95) at 2026-03-18T10:49:00+00:00"
+      ],
+      "notes": "Direct evidence indicates a sharp, concurrent isolated spike in both network_rx (peak ~16.8 KB/s, z-score ~111.7) and network_tx (peak ~21.9 KB/s, z-score ~13.95) at 10:49:00. While network traffic surges can occasionally reflect retransmissions or latency-related buffering/queuing delays under degraded network conditions, there are no direct latency metrics or packet drop observations to confirm network delay.",
+      "service": "session-db",
+      "pod": "session-db-0"
+    },
+    {
+      "score": 0.075116,
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "supporting_evidence": [
+        "network_rx experienced an isolated surge at 2026-03-18T10:50:00+00:00 with peak absolute value 11983.89 B/s and z-score 139.57 (e1)"
+      ],
+      "notes": "The target pod displays a sharp, statistically significant spike in inbound network traffic (network_rx z-score 139.57, peaking at 11,983 bytes/sec) isolated to a single 1-minute bin. In a message-queue processing pod communicating with RabbitMQ, bursty incoming traffic or traffic retransmissions often accompany networking anomalies such as network delay or queue-draining flushes.",
+      "service": "queue-master",
+      "pod": "queue-master-5bb5566684-9gkdj"
+    },
+    {
+      "score": 0.057412,
+      "fault_type": "network_delay",
+      "local_rank": 1,
+      "supporting_evidence": [
+        "e1: network_rx isolated spike at 2026-03-18T10:52:00 (peak=14286.9 B/s, zscore=74.19)"
+      ],
+      "notes": "Direct evidence e1 demonstrates an isolated surge in network_rx (peaking at ~14.3 KB/s, z-score ~74.2) at 10:52:00, which temporally aligns with an isolated p95/p99 latency spike observed upstream on orders-94d48dc8-prbdt (e5). While this could reflect delayed transmissions or bursts of network traffic, direct evidence does not show local latency degradation or packet retransmissions.",
+      "service": "shipping",
+      "pod": "shipping-66d8f78d5f-wknr9"
+    }
+  ],
+  "final_summary": "Most likely root cause is pod catalogue-58bdd4d4f9-48jpd with memory_stress.",
+  "warnings": [],
+  "errors": [],
+  "metadata": {
+    "workflow": {
+      "version": "v2-refine-v1",
+      "mode": "multi_agent",
+      "phases": [
+        "initial_evidence_extraction",
+        "per_pod_hypothesis_generation",
+        "global_joint_ranking"
+      ],
+      "diagnostic_granularity": "pod",
+      "service_result_derivation": "project highest-ranked Pod for each unique (service, fault_type)",
+      "refine_agent_enabled": true,
+      "termination_reason": "ambiguity_resolved"
+    },
+    "hypothesis_agent": {
+      "entity_count": 11,
+      "entity_granularity": "pod",
+      "hypothesis_count": 18,
+      "pruning_enabled": false,
+      "fault_catalog_version": "sockshop-v1",
+      "allowed_fault_types": [
+        "cpu_stress",
+        "memory_stress",
+        "pod_failure",
+        "exception_injection",
+        "io_fault",
+        "network_delay",
+        "network_loss",
+        "network_partition"
+      ],
+      "direct_evidence_selection": [
+        {
+          "pod": "carts-5b77c45b65-ks75w",
+          "raw_count": 1,
+          "unique_count": 1,
+          "retained_count": 1,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "metric": 1
+          },
+          "retained_by_evidence_kind": {
+            "minute_anomaly": 1
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 2436,
+          "related_transport_bytes": 1959,
+          "timeline_transport_bytes": 296,
+          "total_evidence_transport_bytes": 4691
+        },
+        {
+          "pod": "carts-5b77c45b65-z9k6r",
+          "raw_count": 1,
+          "unique_count": 1,
+          "retained_count": 1,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "metric": 1
+          },
+          "retained_by_evidence_kind": {
+            "minute_anomaly": 1
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 1882,
+          "related_transport_bytes": 2513,
+          "timeline_transport_bytes": 259,
+          "total_evidence_transport_bytes": 4654
+        },
+        {
+          "pod": "catalogue-58bdd4d4f9-48jpd",
+          "raw_count": 3,
+          "unique_count": 3,
+          "retained_count": 3,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "metric": 3
+          },
+          "retained_by_evidence_kind": {
+            "minute_anomaly": 3
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 6599,
+          "related_transport_bytes": 2,
+          "timeline_transport_bytes": 851,
+          "total_evidence_transport_bytes": 7452
+        },
+        {
+          "pod": "orders-94d48dc8-prbdt",
+          "raw_count": 3,
+          "unique_count": 3,
+          "retained_count": 3,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "metric": 3
+          },
+          "retained_by_evidence_kind": {
+            "latency_profile": 1,
+            "minute_anomaly": 2
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 8361,
+          "related_transport_bytes": 5083,
+          "timeline_transport_bytes": 827,
+          "total_evidence_transport_bytes": 14271
+        },
+        {
+          "pod": "payment-664c4d4c74-xbjhf",
+          "raw_count": 1,
+          "unique_count": 1,
+          "retained_count": 1,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "metric": 1
+          },
+          "retained_by_evidence_kind": {
+            "minute_anomaly": 1
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 1949,
+          "related_transport_bytes": 8598,
+          "timeline_transport_bytes": 259,
+          "total_evidence_transport_bytes": 10806
+        },
+        {
+          "pod": "queue-master-5bb5566684-9gkdj",
+          "raw_count": 1,
+          "unique_count": 1,
+          "retained_count": 1,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "metric": 1
+          },
+          "retained_by_evidence_kind": {
+            "minute_anomaly": 1
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 1952,
+          "related_transport_bytes": 2,
+          "timeline_transport_bytes": 260,
+          "total_evidence_transport_bytes": 2214
+        },
+        {
+          "pod": "session-db-0",
+          "raw_count": 2,
+          "unique_count": 2,
+          "retained_count": 2,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "metric": 2
+          },
+          "retained_by_evidence_kind": {
+            "minute_anomaly": 2
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 3843,
+          "related_transport_bytes": 2,
+          "timeline_transport_bytes": 519,
+          "total_evidence_transport_bytes": 4364
+        },
+        {
+          "pod": "shipping-66d8f78d5f-9rcrc",
+          "raw_count": 1,
+          "unique_count": 1,
+          "retained_count": 1,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "metric": 1
+          },
+          "retained_by_evidence_kind": {
+            "window_shift": 1
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 931,
+          "related_transport_bytes": 10623,
+          "timeline_transport_bytes": 179,
+          "total_evidence_transport_bytes": 11733
+        },
+        {
+          "pod": "shipping-66d8f78d5f-wknr9",
+          "raw_count": 1,
+          "unique_count": 1,
+          "retained_count": 1,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "metric": 1
+          },
+          "retained_by_evidence_kind": {
+            "minute_anomaly": 1
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 1948,
+          "related_transport_bytes": 9606,
+          "timeline_transport_bytes": 259,
+          "total_evidence_transport_bytes": 11813
+        },
+        {
+          "pod": "user-5c64496568-7jpx8",
+          "raw_count": 1,
+          "unique_count": 1,
+          "retained_count": 1,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "metric": 1
+          },
+          "retained_by_evidence_kind": {
+            "latency_profile": 1
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 3214,
+          "related_transport_bytes": 6073,
+          "timeline_transport_bytes": 230,
+          "total_evidence_transport_bytes": 9517
+        },
+        {
+          "pod": "user-5c64496568-xj5vk",
+          "raw_count": 2,
+          "unique_count": 2,
+          "retained_count": 2,
+          "omitted_count": 0,
+          "max_records": 20,
+          "truncated": false,
+          "retained_by_source": {
+            "log": 1,
+            "metric": 1
+          },
+          "retained_by_evidence_kind": {
+            "latency_profile": 1,
+            "window_count_shift": 1
+          },
+          "selection_policy": "all_data_gap_then_source_kind_signal_coverage_then_severity",
+          "direct_transport_bytes": 5919,
+          "related_transport_bytes": 3291,
+          "timeline_transport_bytes": 540,
+          "total_evidence_transport_bytes": 9750
+        }
+      ],
+      "run_history": [
+        {
+          "requested_pod_count": 11,
+          "candidate_covered_pod_count": 9,
+          "max_concurrency": 8,
+          "provider_failed_pods_before_recovery": [],
+          "transport_recovery_attempted_pods": [],
+          "transport_recovery_candidate_pods": [],
+          "unresolved_provider_failure_pods": [],
+          "provider_success_without_candidate_pods": [
+            "user-5c64496568-7jpx8",
+            "user-5c64496568-xj5vk"
+          ],
+          "candidate_uncovered_pods": [
+            "user-5c64496568-7jpx8",
+            "user-5c64496568-xj5vk"
+          ],
+          "material_candidate_uncovered_pods": [],
+          "catalog_coverage_recovery_attempted_pods": [],
+          "catalog_coverage_recovery_candidate_pods": [],
+          "validation_events": [
+            {
+              "purpose": "hypothesis:pod:session-db-0",
+              "pod": "session-db-0",
+              "response_shape": "hypotheses",
+              "response_row_count": 2,
+              "accepted_candidate_count": 2,
+              "malformed_row_count": 0,
+              "rejected_fault_types": []
+            },
+            {
+              "purpose": "hypothesis:pod:queue-master-5bb5566684-9gkdj",
+              "pod": "queue-master-5bb5566684-9gkdj",
+              "response_shape": "hypotheses",
+              "response_row_count": 0,
+              "accepted_candidate_count": 0,
+              "malformed_row_count": 0,
+              "rejected_fault_types": [],
+              "parsed_response_preview": "{\"hypotheses\": []}"
+            },
+            {
+              "purpose": "hypothesis:pod:payment-664c4d4c74-xbjhf",
+              "pod": "payment-664c4d4c74-xbjhf",
+              "response_shape": "hypotheses",
+              "response_row_count": 0,
+              "accepted_candidate_count": 0,
+              "malformed_row_count": 0,
+              "rejected_fault_types": [],
+              "parsed_response_preview": "{\"hypotheses\": []}"
+            },
+            {
+              "purpose": "hypothesis:pod:orders-94d48dc8-prbdt",
+              "pod": "orders-94d48dc8-prbdt",
+              "response_shape": "hypotheses",
+              "response_row_count": 2,
+              "accepted_candidate_count": 2,
+              "malformed_row_count": 0,
+              "rejected_fault_types": []
+            },
+            {
+              "purpose": "hypothesis:pod:catalogue-58bdd4d4f9-48jpd",
+              "pod": "catalogue-58bdd4d4f9-48jpd",
+              "response_shape": "hypotheses",
+              "response_row_count": 2,
+              "accepted_candidate_count": 2,
+              "malformed_row_count": 0,
+              "rejected_fault_types": []
+            },
+            {
+              "purpose": "hypothesis:pod:payment-664c4d4c74-xbjhf:coverage_review",
+              "pod": "payment-664c4d4c74-xbjhf",
+              "response_shape": "hypotheses",
+              "response_row_count": 3,
+              "accepted_candidate_count": 3,
+              "malformed_row_count": 0,
+              "rejected_fault_types": []
+            },
+            {
+              "purpose": "hypothesis:pod:queue-master-5bb5566684-9gkdj:coverage_review",
+              "pod": "queue-master-5bb5566684-9gkdj",
+              "response_shape": "hypotheses",
+              "response_row_count": 2,
+              "accepted_candidate_count": 2,
+              "malformed_row_count": 0,
+              "rejected_fault_types": []
+            },
+            {
+              "purpose": "hypothesis:pod:shipping-66d8f78d5f-9rcrc",
+              "pod": "shipping-66d8f78d5f-9rcrc",
+              "response_shape": "hypotheses",
+              "response_row_count": 1,
+              "accepted_candidate_count": 1,
+              "malformed_row_count": 0,
+              "rejected_fault_types": []
+            },
+            {
+              "purpose": "hypothesis:pod:user-5c64496568-7jpx8",
+              "pod": "user-5c64496568-7jpx8",
+              "response_shape": "hypotheses",
+              "response_row_count": 0,
+              "accepted_candidate_count": 0,
+              "malformed_row_count": 0,
+              "rejected_fault_types": [],
+              "parsed_response_preview": "{\"hypotheses\": []}"
+            },
+            {
+              "purpose": "hypothesis:pod:user-5c64496568-xj5vk",
+              "pod": "user-5c64496568-xj5vk",
+              "response_shape": "hypotheses",
+              "response_row_count": 0,
+              "accepted_candidate_count": 0,
+              "malformed_row_count": 0,
+              "rejected_fault_types": [],
+              "parsed_response_preview": "{\"hypotheses\": []}"
+            },
+            {
+              "purpose": "hypothesis:pod:shipping-66d8f78d5f-wknr9",
+              "pod": "shipping-66d8f78d5f-wknr9",
+              "response_shape": "hypotheses",
+              "response_row_count": 2,
+              "accepted_candidate_count": 2,
+              "malformed_row_count": 0,
+              "rejected_fault_types": []
+            }
+          ]
+        }
+      ],
+      "full_run": {
+        "requested_pod_count": 11,
+        "candidate_covered_pod_count": 9,
+        "max_concurrency": 8,
+        "provider_failed_pods_before_recovery": [],
+        "transport_recovery_attempted_pods": [],
+        "transport_recovery_candidate_pods": [],
+        "unresolved_provider_failure_pods": [],
+        "provider_success_without_candidate_pods": [
+          "user-5c64496568-7jpx8",
+          "user-5c64496568-xj5vk"
+        ],
+        "candidate_uncovered_pods": [
+          "user-5c64496568-7jpx8",
+          "user-5c64496568-xj5vk"
+        ],
+        "material_candidate_uncovered_pods": [],
+        "catalog_coverage_recovery_attempted_pods": [],
+        "catalog_coverage_recovery_candidate_pods": [],
+        "validation_events": [
+          {
+            "purpose": "hypothesis:pod:session-db-0",
+            "pod": "session-db-0",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:queue-master-5bb5566684-9gkdj",
+            "pod": "queue-master-5bb5566684-9gkdj",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:payment-664c4d4c74-xbjhf",
+            "pod": "payment-664c4d4c74-xbjhf",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:orders-94d48dc8-prbdt",
+            "pod": "orders-94d48dc8-prbdt",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:catalogue-58bdd4d4f9-48jpd",
+            "pod": "catalogue-58bdd4d4f9-48jpd",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:payment-664c4d4c74-xbjhf:coverage_review",
+            "pod": "payment-664c4d4c74-xbjhf",
+            "response_shape": "hypotheses",
+            "response_row_count": 3,
+            "accepted_candidate_count": 3,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:queue-master-5bb5566684-9gkdj:coverage_review",
+            "pod": "queue-master-5bb5566684-9gkdj",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:shipping-66d8f78d5f-9rcrc",
+            "pod": "shipping-66d8f78d5f-9rcrc",
+            "response_shape": "hypotheses",
+            "response_row_count": 1,
+            "accepted_candidate_count": 1,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:user-5c64496568-7jpx8",
+            "pod": "user-5c64496568-7jpx8",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:user-5c64496568-xj5vk",
+            "pod": "user-5c64496568-xj5vk",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:shipping-66d8f78d5f-wknr9",
+            "pod": "shipping-66d8f78d5f-wknr9",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          }
+        ]
+      },
+      "latest_run": {
+        "requested_pod_count": 11,
+        "candidate_covered_pod_count": 9,
+        "max_concurrency": 8,
+        "provider_failed_pods_before_recovery": [],
+        "transport_recovery_attempted_pods": [],
+        "transport_recovery_candidate_pods": [],
+        "unresolved_provider_failure_pods": [],
+        "provider_success_without_candidate_pods": [
+          "user-5c64496568-7jpx8",
+          "user-5c64496568-xj5vk"
+        ],
+        "candidate_uncovered_pods": [
+          "user-5c64496568-7jpx8",
+          "user-5c64496568-xj5vk"
+        ],
+        "material_candidate_uncovered_pods": [],
+        "catalog_coverage_recovery_attempted_pods": [],
+        "catalog_coverage_recovery_candidate_pods": [],
+        "validation_events": [
+          {
+            "purpose": "hypothesis:pod:session-db-0",
+            "pod": "session-db-0",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:queue-master-5bb5566684-9gkdj",
+            "pod": "queue-master-5bb5566684-9gkdj",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:payment-664c4d4c74-xbjhf",
+            "pod": "payment-664c4d4c74-xbjhf",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:orders-94d48dc8-prbdt",
+            "pod": "orders-94d48dc8-prbdt",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:catalogue-58bdd4d4f9-48jpd",
+            "pod": "catalogue-58bdd4d4f9-48jpd",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:payment-664c4d4c74-xbjhf:coverage_review",
+            "pod": "payment-664c4d4c74-xbjhf",
+            "response_shape": "hypotheses",
+            "response_row_count": 3,
+            "accepted_candidate_count": 3,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:queue-master-5bb5566684-9gkdj:coverage_review",
+            "pod": "queue-master-5bb5566684-9gkdj",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:shipping-66d8f78d5f-9rcrc",
+            "pod": "shipping-66d8f78d5f-9rcrc",
+            "response_shape": "hypotheses",
+            "response_row_count": 1,
+            "accepted_candidate_count": 1,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:user-5c64496568-7jpx8",
+            "pod": "user-5c64496568-7jpx8",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:user-5c64496568-xj5vk",
+            "pod": "user-5c64496568-xj5vk",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:shipping-66d8f78d5f-wknr9",
+            "pod": "shipping-66d8f78d5f-wknr9",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          }
+        ]
+      },
+      "hypotheses": [
+        {
+          "hypothesis_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "entity_type": "pod",
+          "entity_name": "carts-5b77c45b65-ks75w",
+          "service": "carts",
+          "pod": "carts-5b77c45b65-ks75w",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "reasoning": "Intermittent p99 latency spikes (peaking at ~48.2ms) are observed on the pod across 3 of 11 bins. Network delay is a plausible explanation for increased latency without documented process crashes or saturations.",
+          "supporting_evidence": [
+            "e1: latency_p99 intermittent increase in 3/11 1min bins, peak=48.18ms, peak z-score=765.89"
+          ],
+          "contradictory_evidence": [
+            "e1: Mean abnormal latency (27.90ms) is lower than baseline (31.70ms), and peak absolute latency (48.18ms) remains well within the baseline maximum range (76.5ms)."
+          ],
+          "evidence_gaps": [
+            "No network edge latency, TCP retransmission, or drop telemetry available to confirm network-induced delay."
+          ]
+        },
+        {
+          "hypothesis_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "entity_type": "pod",
+          "entity_name": "carts-5b77c45b65-ks75w",
+          "service": "carts",
+          "pod": "carts-5b77c45b65-ks75w",
+          "fault_type": "cpu_stress",
+          "local_rank": 2,
+          "reasoning": "Elevated tail request latency can be driven by episodic CPU contention or quota throttling at the pod level.",
+          "supporting_evidence": [
+            "e1: latency_p99 elevated intermittently with high peak z-score (765.89)"
+          ],
+          "contradictory_evidence": [
+            "No direct CPU utilization or throttling metrics are reported showing CPU exhaustion."
+          ],
+          "evidence_gaps": [
+            "Missing CPU usage, saturation, and throttling metrics."
+          ]
+        },
+        {
+          "hypothesis_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "entity_type": "pod",
+          "entity_name": "carts-5b77c45b65-z9k6r",
+          "service": "carts",
+          "pod": "carts-5b77c45b65-z9k6r",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "reasoning": "A burst in latency_p99 was observed starting at 10:55:00 (peak=39.75ms, z-score=457.17), indicating a potential transient communication or processing delay.",
+          "supporting_evidence": [
+            "e2: latency_p99 isolated increase at 10:55:00, peak=39.75ms, peak z-score=457.17"
+          ],
+          "contradictory_evidence": [
+            "e2: Abnormal latency values (peak 39.75ms, max 48.25ms) are well within the baseline maximum (96.31ms), with overall abnormal mean lower than baseline mean."
+          ],
+          "evidence_gaps": [
+            "Missing network edge metrics, round-trip times, and packet drop data."
+          ]
+        },
+        {
+          "hypothesis_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "entity_type": "pod",
+          "entity_name": "carts-5b77c45b65-z9k6r",
+          "service": "carts",
+          "pod": "carts-5b77c45b65-z9k6r",
+          "fault_type": "cpu_stress",
+          "local_rank": 2,
+          "reasoning": "A sudden tail latency spike at 10:55:00 could be caused by transient CPU scheduling delay or resource throttling.",
+          "supporting_evidence": [
+            "e2: latency_p99 anomaly detected at 10:55:00 with peak z-score=457.17"
+          ],
+          "contradictory_evidence": [
+            "No direct metric of high CPU utilization or container throttling is recorded."
+          ],
+          "evidence_gaps": [
+            "Missing container CPU metrics and throttling counters."
+          ]
+        },
+        {
+          "hypothesis_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "entity_type": "pod",
+          "entity_name": "catalogue-58bdd4d4f9-48jpd",
+          "service": "catalogue",
+          "pod": "catalogue-58bdd4d4f9-48jpd",
+          "fault_type": "memory_stress",
+          "local_rank": 1,
+          "reasoning": "The pod exhibits a sharp, sustained spike in memory_usage_pct (peaking at 95.17%, relative change +49.17%, z-score 38.58) between 10:51:00 and 10:53:00. This near-exhaustion peak aligns directly with memory pressure.",
+          "supporting_evidence": [
+            "e1: memory_usage_pct sustained increase from 10:51:00 to 10:53:00 peaking at 95.17% (z-score 38.58)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Absence of explicit OOM-kill logs or container restart events confirming termination or dropped allocations"
+          ]
+        },
+        {
+          "hypothesis_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "entity_type": "pod",
+          "entity_name": "catalogue-58bdd4d4f9-48jpd",
+          "service": "catalogue",
+          "pod": "catalogue-58bdd4d4f9-48jpd",
+          "fault_type": "network_delay",
+          "local_rank": 2,
+          "reasoning": "There is intermittent elevation in latency_p95 alongside an isolated spike in network_rx at 10:48:00. However, absolute latency remains low (peak abnormal value 9.32 ms, well within baseline ranges up to 23.56 ms), making network delay much less plausible as an initiating root cause.",
+          "supporting_evidence": [
+            "e3: latency_p95 intermittent anomaly (peak 8.60 ms, z-score 20.23)",
+            "e2: network_rx isolated spike at 10:48:00 peaking at 17712.90 bytes/sec"
+          ],
+          "contradictory_evidence": [
+            "e3: abnormal latency_p95 max of 9.32 ms is well within baseline maximum (23.56 ms), and overall mean abnormal latency is actually lower than baseline (-18.45%)"
+          ],
+          "evidence_gaps": [
+            "No packet drop, round-trip time, or downstream network metrics confirming injected delay on catalogue network edges"
+          ]
+        },
+        {
+          "hypothesis_id": "pod:orders-94d48dc8-prbdt:h1",
+          "entity_type": "pod",
+          "entity_name": "orders-94d48dc8-prbdt",
+          "service": "orders",
+          "pod": "orders-94d48dc8-prbdt",
+          "fault_type": "memory_stress",
+          "local_rank": 1,
+          "reasoning": "The pod exhibits sustained, severe memory pressure throughout the observation window, with memory usage exceeding 100% (abnormal value 105.56%, peaking at 105.95% vs baseline 73.65%, z-score 1068.13). High absolute utilization indicates critical memory exhaustion.",
+          "supporting_evidence": [
+            "orders-94d48dc8-prbdt memory_usage_pct sustained increase across all 11 bins, reaching 105.95% (delta 31.90%, z-score 1068.13)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Container OOM kill events or allocation failure logs",
+            "Pod restart or lifecycle termination telemetry"
+          ]
+        },
+        {
+          "hypothesis_id": "pod:orders-94d48dc8-prbdt:h2",
+          "entity_type": "pod",
+          "entity_name": "orders-94d48dc8-prbdt",
+          "service": "orders",
+          "pod": "orders-94d48dc8-prbdt",
+          "fault_type": "cpu_stress",
+          "local_rank": 2,
+          "reasoning": "Intermittent CPU usage spikes were observed (peak 30.98%, z-score 23.52) during the window, but CPU usage remains well below quota/saturation levels (mean abnormal value 7.62%), making CPU stress less likely as the primary root cause.",
+          "supporting_evidence": [
+            "orders-94d48dc8-prbdt cpu_usage_pct increased intermittently in 2/11 bins peaking at 30.98%"
+          ],
+          "contradictory_evidence": [
+            "Absolute CPU usage remains low (mean abnormal 7.62%, peak 30.98%), showing no evidence of CPU quota throttling or saturation"
+          ],
+          "evidence_gaps": [
+            "CPU throttling metrics (container_cpu_cfs_throttled_periods_total)"
+          ]
+        },
+        {
+          "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "entity_type": "pod",
+          "entity_name": "payment-664c4d4c74-xbjhf",
+          "service": "payment",
+          "pod": "payment-664c4d4c74-xbjhf",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "reasoning": "A sharp, isolated burst in incoming network traffic (network_rx reaching 13,280 B/s with a z-score of 64.22) at 10:54:00 indicates an unexpected traffic spike, batching, or retried payload delivery often observed during network latency or buffering issues affecting the ingress path from upstream services.",
+          "supporting_evidence": [
+            "e1: Isolated network_rx spike at 2026-03-18T10:54:00+00:00 reaching 13280.82 bytes/sec (z-score 64.22, baseline mean 1843.71 bytes/sec)."
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Request duration or round-trip trace latency metrics on the orders-to-payment edge to verify transmission delay."
+          ]
+        },
+        {
+          "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "entity_type": "pod",
+          "entity_name": "payment-664c4d4c74-xbjhf",
+          "service": "payment",
+          "pod": "payment-664c4d4c74-xbjhf",
+          "fault_type": "network_loss",
+          "local_rank": 2,
+          "reasoning": "A sudden burst in received network traffic can stem from packet retransmissions or repeated request retries caused by intermittent network packet loss on incoming connections from orders.",
+          "supporting_evidence": [
+            "e1: network_rx surge to 13280.82 bytes/sec at 2026-03-18T10:54:00+00:00 (z-score 64.22) representing an abrupt 41.1% relative increase over baseline."
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "TCP retransmission rates, dropped packet counters, or client retry counts to distinguish loss-induced retries from normal traffic surges."
+          ]
+        },
+        {
+          "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "entity_type": "pod",
+          "entity_name": "payment-664c4d4c74-xbjhf",
+          "service": "payment",
+          "pod": "payment-664c4d4c74-xbjhf",
+          "fault_type": "exception_injection",
+          "local_rank": 3,
+          "reasoning": "Application-level failure or malformed payload injection can produce atypical request patterns or rapid repeated failing calls from upstream services, manifesting locally as an isolated ingress burst.",
+          "supporting_evidence": [
+            "e1: Sudden 1-minute burst in network_rx at 2026-03-18T10:54:00+00:00 (peak z-score 64.22)."
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Application error logs, HTTP response code distributions (e.g., 5xx rate), and trace exception details."
+          ]
+        },
+        {
+          "hypothesis_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "entity_type": "pod",
+          "entity_name": "queue-master-5bb5566684-9gkdj",
+          "service": "queue-master",
+          "pod": "queue-master-5bb5566684-9gkdj",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "reasoning": "The target pod displays a sharp, statistically significant spike in inbound network traffic (network_rx z-score 139.57, peaking at 11,983 bytes/sec) isolated to a single 1-minute bin. In a message-queue processing pod communicating with RabbitMQ, bursty incoming traffic or traffic retransmissions often accompany networking anomalies such as network delay or queue-draining flushes.",
+          "supporting_evidence": [
+            "network_rx experienced an isolated surge at 2026-03-18T10:50:00+00:00 with peak absolute value 11983.89 B/s and z-score 139.57 (e1)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Direct round-trip time, edge latency metrics, or TCP retransmission stats to confirm whether network delay induced queue buffering or message delivery delays."
+          ]
+        },
+        {
+          "hypothesis_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "entity_type": "pod",
+          "entity_name": "queue-master-5bb5566684-9gkdj",
+          "service": "queue-master",
+          "pod": "queue-master-5bb5566684-9gkdj",
+          "fault_type": "network_loss",
+          "local_rank": 2,
+          "reasoning": "Intermittent packet loss on paths between queue-master and rabbitmq can manifest as sudden bursts of retransmitted traffic and compressed delivery windows once dropped packets are resent, resulting in brief spikes in received traffic (network_rx).",
+          "supporting_evidence": [
+            "network_rx spiked sharply for an isolated 1-minute period (e1)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Packet drop counts, TCP reset metrics, or request failure logs between queue-master and rabbitmq to distinguish packet loss from benign traffic bursts or network delay."
+          ]
+        },
+        {
+          "hypothesis_id": "pod:session-db-0:h1",
+          "entity_type": "pod",
+          "entity_name": "session-db-0",
+          "service": "session-db",
+          "pod": "session-db-0",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "reasoning": "Direct evidence indicates a sharp, concurrent isolated spike in both network_rx (peak ~16.8 KB/s, z-score ~111.7) and network_tx (peak ~21.9 KB/s, z-score ~13.95) at 10:49:00. While network traffic surges can occasionally reflect retransmissions or latency-related buffering/queuing delays under degraded network conditions, there are no direct latency metrics or packet drop observations to confirm network delay.",
+          "supporting_evidence": [
+            "e1: network_rx increased sharply to a peak of 16759.67 bytes/sec (z-score 111.69) at 2026-03-18T10:49:00+00:00",
+            "e2: network_tx increased to a peak of 21915.73 bytes/sec (z-score 13.95) at 2026-03-18T10:49:00+00:00"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Missing trace latency or round-trip time measurements between front-end and session-db-0",
+            "Missing TCP retransmission and timeout counters"
+          ]
+        },
+        {
+          "hypothesis_id": "pod:session-db-0:h2",
+          "entity_type": "pod",
+          "entity_name": "session-db-0",
+          "service": "session-db",
+          "pod": "session-db-0",
+          "fault_type": "network_loss",
+          "local_rank": 2,
+          "reasoning": "The isolated spike in network throughput could potentially be associated with packet retransmissions or duplicate transfers following packet loss. However, evidence of actual drops, retries, or connection reset errors is absent.",
+          "supporting_evidence": [
+            "e1: network_rx isolated surge at 2026-03-18T10:49:00+00:00",
+            "e2: network_tx isolated surge at 2026-03-18T10:49:00+00:00"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Missing packet drop, TCP retry, or error rate metrics to establish packet loss"
+          ]
+        },
+        {
+          "hypothesis_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+          "entity_type": "pod",
+          "entity_name": "shipping-66d8f78d5f-9rcrc",
+          "service": "shipping",
+          "pod": "shipping-66d8f78d5f-9rcrc",
+          "fault_type": "cpu_stress",
+          "local_rank": 1,
+          "reasoning": "The target pod shipping-66d8f78d5f-9rcrc displays a slight window shift in cpu_usage_pct from 1.34% to 1.78% (peak 3.26%). However, absolute CPU utilization remains extremely low, indicating that genuine CPU exhaustion or throttling is not occurring. This is the only direct metric anomaly on the pod.",
+          "supporting_evidence": [
+            "cpu_usage_pct on shipping-66d8f78d5f-9rcrc shifted from 1.341% to 1.782% (z-score 1.052, peak 3.26%) between 10:45:30 and 10:55:45 (e1)."
+          ],
+          "contradictory_evidence": [
+            "Absolute CPU utilization maxes out at only 3.26%, far below any saturation or quota threshold that would cause performance degradation."
+          ],
+          "evidence_gaps": [
+            "CPU throttling metrics and container CPU quota saturation telemetry."
+          ]
+        },
+        {
+          "hypothesis_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "entity_type": "pod",
+          "entity_name": "shipping-66d8f78d5f-wknr9",
+          "service": "shipping",
+          "pod": "shipping-66d8f78d5f-wknr9",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "reasoning": "Direct evidence e1 demonstrates an isolated surge in network_rx (peaking at ~14.3 KB/s, z-score ~74.2) at 10:52:00, which temporally aligns with an isolated p95/p99 latency spike observed upstream on orders-94d48dc8-prbdt (e5). While this could reflect delayed transmissions or bursts of network traffic, direct evidence does not show local latency degradation or packet retransmissions.",
+          "supporting_evidence": [
+            "e1: network_rx isolated spike at 2026-03-18T10:52:00 (peak=14286.9 B/s, zscore=74.19)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Missing direct round-trip or edge latency metrics for shipping-66d8f78d5f-wknr9",
+            "Missing TCP retransmit or trace latency data"
+          ]
+        },
+        {
+          "hypothesis_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "entity_type": "pod",
+          "entity_name": "shipping-66d8f78d5f-wknr9",
+          "service": "shipping",
+          "pod": "shipping-66d8f78d5f-wknr9",
+          "fault_type": "network_loss",
+          "local_rank": 2,
+          "reasoning": "An isolated burst in incoming network traffic could indicate packet retransmission bursts or recovered message delivery attempts caused by intermittent packet loss. However, there are no recorded dropped packets, resets, or application errors confirming loss.",
+          "supporting_evidence": [
+            "e1: network_rx isolated spike at 2026-03-18T10:52:00 (peak=14286.9 B/s, zscore=74.19)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Missing packet drop, retry, or socket reset metrics for shipping-66d8f78d5f-wknr9"
+          ]
+        }
+      ],
+      "enabled": true
+    },
+    "rank_agent": {
+      "pruning_enabled": false,
+      "pairwise_enabled": true,
+      "input_hypotheses": 18,
+      "ranked_hypotheses": 18,
+      "pairwise_comparison_count": 136,
+      "pairwise_window": 3,
+      "pairwise_repetitions": 2,
+      "pairwise_max_concurrency": 8,
+      "reverse_order_on_repeat": true,
+      "pairwise_explanation_policy": "none",
+      "pairwise_reason_word_limit": 16,
+      "locality_aware_pair_batching": true,
+      "listwise_include_rationales": false,
+      "pairwise_include_supporting_evidence": false,
+      "listwise_include_supporting_evidence": false,
+      "transport_short_ids": true,
+      "pairwise_topology_scope": "candidate_services_plus_one_hop_induced_subgraph",
+      "pairwise_recovery_rounds": 2,
+      "same_entity_pairs_enabled": true,
+      "adaptive_anchor_enabled": true,
+      "coarse_window_pair_count": 48,
+      "same_entity_pair_count": 10,
+      "anchor_pair_count": 19,
+      "anchor_count": 3,
+      "anchor_ids": [
+        "pod:orders-94d48dc8-prbdt:h1",
+        "pod:catalogue-58bdd4d4f9-48jpd:h1",
+        "pod:session-db-0:h1"
+      ],
+      "anchor_challenger_count": 9,
+      "anchor_challenger_ids": [
+        "pod:queue-master-5bb5566684-9gkdj:h1",
+        "pod:shipping-66d8f78d5f-wknr9:h1",
+        "pod:queue-master-5bb5566684-9gkdj:h2",
+        "pod:catalogue-58bdd4d4f9-48jpd:h2",
+        "pod:payment-664c4d4c74-xbjhf:h1",
+        "pod:carts-5b77c45b65-z9k6r:h1",
+        "pod:carts-5b77c45b65-ks75w:h1",
+        "pod:carts-5b77c45b65-z9k6r:h2",
+        "pod:shipping-66d8f78d5f-9rcrc:h1"
+      ],
+      "anchor_max_rounds": 2,
+      "anchor_rounds_executed": 2,
+      "anchor_round_details": [
+        {
+          "round": 1,
+          "challenger_ids": [
+            "pod:queue-master-5bb5566684-9gkdj:h1",
+            "pod:queue-master-5bb5566684-9gkdj:h2",
+            "pod:shipping-66d8f78d5f-wknr9:h1",
+            "pod:catalogue-58bdd4d4f9-48jpd:h2",
+            "pod:carts-5b77c45b65-z9k6r:h1",
+            "pod:carts-5b77c45b65-z9k6r:h2",
+            "pod:carts-5b77c45b65-ks75w:h1",
+            "pod:shipping-66d8f78d5f-9rcrc:h1"
+          ],
+          "added_pair_count": 16
+        },
+        {
+          "round": 2,
+          "challenger_ids": [
+            "pod:queue-master-5bb5566684-9gkdj:h1",
+            "pod:shipping-66d8f78d5f-wknr9:h1",
+            "pod:queue-master-5bb5566684-9gkdj:h2",
+            "pod:payment-664c4d4c74-xbjhf:h1",
+            "pod:catalogue-58bdd4d4f9-48jpd:h2",
+            "pod:carts-5b77c45b65-z9k6r:h1",
+            "pod:carts-5b77c45b65-ks75w:h1",
+            "pod:carts-5b77c45b65-z9k6r:h2",
+            "pod:shipping-66d8f78d5f-9rcrc:h1"
+          ],
+          "added_pair_count": 3
+        }
+      ],
+      "anchor_final_closure_enabled": true,
+      "anchor_final_closure_attempted": false,
+      "anchor_final_closure_pair_count": 0,
+      "anchor_closure_complete": true,
+      "anchor_uncovered_pair_count": 0,
+      "anchor_uncovered_pairs": [],
+      "reused_pair_count": 0,
+      "new_pair_count": 68,
+      "selected_pair_count": 68,
+      "pairwise_judgment_count": 136,
+      "valid_judgment_count": 136,
+      "recovered_judgment_count": 2,
+      "effective_pair_count": 68,
+      "effective_judgment_count": 136,
+      "incomplete_pair_count": 0,
+      "incomplete_pairs": [],
+      "order_inconsistency_count": 3,
+      "order_inconsistent_pairs": [
+        "pod:session-db-0:h2|pod:shipping-66d8f78d5f-wknr9:h2",
+        "pod:carts-5b77c45b65-ks75w:h1|pod:carts-5b77c45b65-z9k6r:h1",
+        "pod:carts-5b77c45b65-z9k6r:h1|pod:catalogue-58bdd4d4f9-48jpd:h2"
+      ],
+      "effective_comparison_graph_connected": true,
+      "refinement_comparison_basis_complete": true,
+      "aggregation": "regularized_bradley_terry",
+      "aggregation_fallback_reason": null,
+      "bt_proposed_top_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "bt_proposed_order": [
+        "pod:catalogue-58bdd4d4f9-48jpd:h1",
+        "pod:orders-94d48dc8-prbdt:h1",
+        "pod:session-db-0:h1",
+        "pod:queue-master-5bb5566684-9gkdj:h1",
+        "pod:shipping-66d8f78d5f-wknr9:h1",
+        "pod:queue-master-5bb5566684-9gkdj:h2",
+        "pod:catalogue-58bdd4d4f9-48jpd:h2",
+        "pod:payment-664c4d4c74-xbjhf:h1",
+        "pod:carts-5b77c45b65-ks75w:h1",
+        "pod:carts-5b77c45b65-z9k6r:h1",
+        "pod:payment-664c4d4c74-xbjhf:h2",
+        "pod:carts-5b77c45b65-z9k6r:h2",
+        "pod:session-db-0:h2",
+        "pod:shipping-66d8f78d5f-wknr9:h2",
+        "pod:orders-94d48dc8-prbdt:h2",
+        "pod:shipping-66d8f78d5f-9rcrc:h1",
+        "pod:carts-5b77c45b65-ks75w:h2",
+        "pod:payment-664c4d4c74-xbjhf:h3"
+      ],
+      "coarse_demotion_top_k": 5,
+      "coarse_demotion_min_positions": 5,
+      "coarse_top_bt_demotions": [
+        {
+          "hypothesis_id": "pod:orders-94d48dc8-prbdt:h2",
+          "coarse_rank": 3,
+          "bt_rank": 15,
+          "demotion": 12
+        },
+        {
+          "hypothesis_id": "pod:session-db-0:h2",
+          "coarse_rank": 5,
+          "bt_rank": 13,
+          "demotion": 8
+        }
+      ],
+      "coarse_leader_bt_demotion": null,
+      "coarse_top_bt_demoted_ids": [
+        "pod:orders-94d48dc8-prbdt:h2",
+        "pod:session-db-0:h2"
+      ],
+      "guarded_bt_enabled": true,
+      "guarded_bt_triggered": true,
+      "guarded_bt_outcome": "challenger_accepted",
+      "guarded_bt_coarse_leader_id": "pod:orders-94d48dc8-prbdt:h1",
+      "guarded_bt_challenger_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+      "guarded_bt_complete": true,
+      "guarded_bt_challenger_accepted": true,
+      "guarded_bt_judgments": [
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "entity_fit_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "fault_type_fit_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "overall_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "decisive_evidence_refs": [
+            "e2.d1",
+            "e1.d2"
+          ],
+          "invalid_decisive_evidence_refs": [],
+          "unresolved_evidence_gap": false,
+          "missing_discriminator": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "entity_fit_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "fault_type_fit_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "overall_winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "decisive_evidence_refs": [
+            "e2.d1",
+            "e1.d2"
+          ],
+          "invalid_decisive_evidence_refs": [],
+          "unresolved_evidence_gap": false,
+          "missing_discriminator": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true
+        }
+      ],
+      "coarse_listwise_complete": true,
+      "coarse_listwise_returned_count": 18,
+      "coarse_listwise_has_leader": true,
+      "coarse_listwise_response_keys": [
+        "order"
+      ],
+      "coarse_listwise_invalid_identifiers": [],
+      "ranking_reliable": true,
+      "ranking_ambiguous": false,
+      "ambiguity_reasons": [],
+      "top_score_margin": 0.054101,
+      "top_score_ratio": 1.272298,
+      "top_evidence_gap_competing_alternative_ids": [],
+      "evidence_gap_alternative_top_k": 5,
+      "evidence_gap_min_alternative_score_ratio": 0.5,
+      "ambiguity_top_score_ratio": 1.1,
+      "order_inconsistency_ratio": 0.044118,
+      "max_order_inconsistency_ratio": 0.25,
+      "listwise_request_bytes": 37000,
+      "pairwise_request_total_bytes": 184043,
+      "pairwise_request_max_bytes": 38692,
+      "guarded_bt_request_total_bytes": 23994,
+      "rank_request_total_bytes": 245037,
+      "hypothesis_generation_coverage": {
+        "requested_pod_count": 11,
+        "candidate_covered_pod_count": 9,
+        "max_concurrency": 8,
+        "provider_failed_pods_before_recovery": [],
+        "transport_recovery_attempted_pods": [],
+        "transport_recovery_candidate_pods": [],
+        "unresolved_provider_failure_pods": [],
+        "provider_success_without_candidate_pods": [
+          "user-5c64496568-7jpx8",
+          "user-5c64496568-xj5vk"
+        ],
+        "candidate_uncovered_pods": [
+          "user-5c64496568-7jpx8",
+          "user-5c64496568-xj5vk"
+        ],
+        "material_candidate_uncovered_pods": [],
+        "catalog_coverage_recovery_attempted_pods": [],
+        "catalog_coverage_recovery_candidate_pods": [],
+        "validation_events": [
+          {
+            "purpose": "hypothesis:pod:session-db-0",
+            "pod": "session-db-0",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:queue-master-5bb5566684-9gkdj",
+            "pod": "queue-master-5bb5566684-9gkdj",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:payment-664c4d4c74-xbjhf",
+            "pod": "payment-664c4d4c74-xbjhf",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:orders-94d48dc8-prbdt",
+            "pod": "orders-94d48dc8-prbdt",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:catalogue-58bdd4d4f9-48jpd",
+            "pod": "catalogue-58bdd4d4f9-48jpd",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:payment-664c4d4c74-xbjhf:coverage_review",
+            "pod": "payment-664c4d4c74-xbjhf",
+            "response_shape": "hypotheses",
+            "response_row_count": 3,
+            "accepted_candidate_count": 3,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:queue-master-5bb5566684-9gkdj:coverage_review",
+            "pod": "queue-master-5bb5566684-9gkdj",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:shipping-66d8f78d5f-9rcrc",
+            "pod": "shipping-66d8f78d5f-9rcrc",
+            "response_shape": "hypotheses",
+            "response_row_count": 1,
+            "accepted_candidate_count": 1,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          },
+          {
+            "purpose": "hypothesis:pod:user-5c64496568-7jpx8",
+            "pod": "user-5c64496568-7jpx8",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:user-5c64496568-xj5vk",
+            "pod": "user-5c64496568-xj5vk",
+            "response_shape": "hypotheses",
+            "response_row_count": 0,
+            "accepted_candidate_count": 0,
+            "malformed_row_count": 0,
+            "rejected_fault_types": [],
+            "parsed_response_preview": "{\"hypotheses\": []}"
+          },
+          {
+            "purpose": "hypothesis:pod:shipping-66d8f78d5f-wknr9",
+            "pod": "shipping-66d8f78d5f-wknr9",
+            "response_shape": "hypotheses",
+            "response_row_count": 2,
+            "accepted_candidate_count": 2,
+            "malformed_row_count": 0,
+            "rejected_fault_types": []
+          }
+        ]
+      },
+      "enabled": true,
+      "coarse_order": [
+        "pod:orders-94d48dc8-prbdt:h1",
+        "pod:catalogue-58bdd4d4f9-48jpd:h1",
+        "pod:orders-94d48dc8-prbdt:h2",
+        "pod:session-db-0:h1",
+        "pod:session-db-0:h2",
+        "pod:shipping-66d8f78d5f-wknr9:h1",
+        "pod:shipping-66d8f78d5f-wknr9:h2",
+        "pod:payment-664c4d4c74-xbjhf:h1",
+        "pod:payment-664c4d4c74-xbjhf:h2",
+        "pod:payment-664c4d4c74-xbjhf:h3",
+        "pod:queue-master-5bb5566684-9gkdj:h1",
+        "pod:queue-master-5bb5566684-9gkdj:h2",
+        "pod:carts-5b77c45b65-ks75w:h1",
+        "pod:carts-5b77c45b65-ks75w:h2",
+        "pod:carts-5b77c45b65-z9k6r:h1",
+        "pod:carts-5b77c45b65-z9k6r:h2",
+        "pod:catalogue-58bdd4d4f9-48jpd:h2",
+        "pod:shipping-66d8f78d5f-9rcrc:h1"
+      ],
+      "pairwise_comparisons": [
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:orders-94d48dc8-prbdt:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h2",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:orders-94d48dc8-prbdt:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h2",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:orders-94d48dc8-prbdt:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:session-db-0:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ],
+          "recovered": true,
+          "recovery_round": 1
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:session-db-0:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h2",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h2|pod:session-db-0:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:session-db-0:h2",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:session-db-0:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h2",
+          "right_id": "pod:session-db-0:h2",
+          "winner_id": "pod:session-db-0:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h2|pod:session-db-0:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:session-db-0:h2",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:session-db-0:h1|pod:session-db-0:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h2",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h2|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:session-db-0:h1|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h2",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:session-db-0:h2|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:session-db-0:h1|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h2",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:session-db-0:h2|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:shipping-66d8f78d5f-wknr9:h1|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h2",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:session-db-0:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h2|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h2|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:payment-664c4d4c74-xbjhf:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h3|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:payment-664c4d4c74-xbjhf:h3",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h2|pod:payment-664c4d4c74-xbjhf:h3",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h2|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h3|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h2|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h3|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:queue-master-5bb5566684-9gkdj:h1|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "winner_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:payment-664c4d4c74-xbjhf:h3",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h2|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h2|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "winner_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:carts-5b77c45b65-ks75w:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "winner_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:carts-5b77c45b65-z9k6r:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h2|pod:carts-5b77c45b65-z9k6r:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "winner_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:carts-5b77c45b65-z9k6r:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h2|pod:carts-5b77c45b65-z9k6r:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:carts-5b77c45b65-z9k6r:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "selection_reasons": [
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h2|pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h2|pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "right_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:shipping-66d8f78d5f-9rcrc:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "right_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h2|pod:shipping-66d8f78d5f-9rcrc:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "right_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h2|pod:shipping-66d8f78d5f-9rcrc:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:orders-94d48dc8-prbdt:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h2",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:orders-94d48dc8-prbdt:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h2",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:orders-94d48dc8-prbdt:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:session-db-0:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ],
+          "recovered": true,
+          "recovery_round": 1
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:session-db-0:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h2",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h2|pod:session-db-0:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h2",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:session-db-0:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h2",
+          "right_id": "pod:orders-94d48dc8-prbdt:h2",
+          "winner_id": "pod:session-db-0:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h2|pod:session-db-0:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h2",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:session-db-0:h1|pod:session-db-0:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h2",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h2|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:session-db-0:h1|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "right_id": "pod:session-db-0:h2",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:session-db-0:h2|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:session-db-0:h1|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "right_id": "pod:session-db-0:h2",
+          "winner_id": "pod:session-db-0:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:session-db-0:h2|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:shipping-66d8f78d5f-wknr9:h1|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "right_id": "pod:session-db-0:h2",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:session-db-0:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h2|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h2|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:payment-664c4d4c74-xbjhf:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "winner_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h3|pod:shipping-66d8f78d5f-wknr9:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:payment-664c4d4c74-xbjhf:h3",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "winner_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h2|pod:payment-664c4d4c74-xbjhf:h3",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h2|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h3|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h2|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h3|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:queue-master-5bb5566684-9gkdj:h1|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "winner_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:payment-664c4d4c74-xbjhf:h3",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h2|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h2|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "winner_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:carts-5b77c45b65-ks75w:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "winner_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:carts-5b77c45b65-z9k6r:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h2|pod:carts-5b77c45b65-z9k6r:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "winner_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:carts-5b77c45b65-z9k6r:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h2|pod:carts-5b77c45b65-z9k6r:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:carts-5b77c45b65-z9k6r:h2",
+          "selection_reasons": [
+            "coarse_rank_window",
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "selection_reasons": [
+            "same_entity_fault_disambiguation"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h2|pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h2|pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:shipping-66d8f78d5f-9rcrc:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "winner_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h2|pod:shipping-66d8f78d5f-9rcrc:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h2|pod:shipping-66d8f78d5f-9rcrc:h1",
+          "selection_reasons": [
+            "coarse_rank_window"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:queue-master-5bb5566684-9gkdj:h1|pod:session-db-0:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:queue-master-5bb5566684-9gkdj:h2|pod:session-db-0:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:orders-94d48dc8-prbdt:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:orders-94d48dc8-prbdt:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:session-db-0:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h2|pod:orders-94d48dc8-prbdt:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h2|pod:orders-94d48dc8-prbdt:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h2|pod:session-db-0:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:shipping-66d8f78d5f-9rcrc:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:shipping-66d8f78d5f-wknr9:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:queue-master-5bb5566684-9gkdj:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "tie",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:queue-master-5bb5566684-9gkdj:h1|pod:session-db-0:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:queue-master-5bb5566684-9gkdj:h2",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:queue-master-5bb5566684-9gkdj:h2|pod:session-db-0:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-ks75w:h1|pod:orders-94d48dc8-prbdt:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:orders-94d48dc8-prbdt:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h1|pod:session-db-0:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:carts-5b77c45b65-z9k6r:h2|pod:orders-94d48dc8-prbdt:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h2|pod:orders-94d48dc8-prbdt:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h2|pod:session-db-0:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:shipping-66d8f78d5f-9rcrc:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_1"
+          ]
+        },
+        {
+          "left_id": "pod:orders-94d48dc8-prbdt:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:payment-664c4d4c74-xbjhf:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_2"
+          ]
+        },
+        {
+          "left_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:payment-664c4d4c74-xbjhf:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_2"
+          ]
+        },
+        {
+          "left_id": "pod:session-db-0:h1",
+          "right_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "winner_id": "tie",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 1,
+          "order_reversed": false,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:session-db-0:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_2"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "right_id": "pod:orders-94d48dc8-prbdt:h1",
+          "winner_id": "pod:orders-94d48dc8-prbdt:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:orders-94d48dc8-prbdt:h1|pod:payment-664c4d4c74-xbjhf:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_2"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "right_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "winner_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:catalogue-58bdd4d4f9-48jpd:h1|pod:payment-664c4d4c74-xbjhf:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_2"
+          ]
+        },
+        {
+          "left_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "right_id": "pod:session-db-0:h1",
+          "winner_id": "pod:session-db-0:h1",
+          "reason": "",
+          "valid_judgment": true,
+          "repetition": 2,
+          "order_reversed": true,
+          "pair_key": "pod:payment-664c4d4c74-xbjhf:h1|pod:session-db-0:h1",
+          "selection_reasons": [
+            "adaptive_cross_rank_anchor",
+            "anchor_round_2"
+          ]
+        }
+      ],
+      "global_ranking": [
+        {
+          "rank": 1,
+          "hypothesis_id": "pod:catalogue-58bdd4d4f9-48jpd:h1",
+          "entity_type": "pod",
+          "entity_name": "catalogue-58bdd4d4f9-48jpd",
+          "service": "catalogue",
+          "pod": "catalogue-58bdd4d4f9-48jpd",
+          "fault_type": "memory_stress",
+          "local_rank": 1,
+          "score": 0.252783,
+          "rationale": "The pod exhibits a sharp, sustained spike in memory_usage_pct (peaking at 95.17%, relative change +49.17%, z-score 38.58) between 10:51:00 and 10:53:00. This near-exhaustion peak aligns directly with memory pressure.",
+          "supporting_evidence": [
+            "e1: memory_usage_pct sustained increase from 10:51:00 to 10:53:00 peaking at 95.17% (z-score 38.58)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Absence of explicit OOM-kill logs or container restart events confirming termination or dropped allocations"
+          ]
+        },
+        {
+          "rank": 2,
+          "hypothesis_id": "pod:orders-94d48dc8-prbdt:h1",
+          "entity_type": "pod",
+          "entity_name": "orders-94d48dc8-prbdt",
+          "service": "orders",
+          "pod": "orders-94d48dc8-prbdt",
+          "fault_type": "memory_stress",
+          "local_rank": 1,
+          "score": 0.198682,
+          "rationale": "The pod exhibits sustained, severe memory pressure throughout the observation window, with memory usage exceeding 100% (abnormal value 105.56%, peaking at 105.95% vs baseline 73.65%, z-score 1068.13). High absolute utilization indicates critical memory exhaustion.",
+          "supporting_evidence": [
+            "orders-94d48dc8-prbdt memory_usage_pct sustained increase across all 11 bins, reaching 105.95% (delta 31.90%, z-score 1068.13)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Container OOM kill events or allocation failure logs",
+            "Pod restart or lifecycle termination telemetry"
+          ]
+        },
+        {
+          "rank": 3,
+          "hypothesis_id": "pod:session-db-0:h1",
+          "entity_type": "pod",
+          "entity_name": "session-db-0",
+          "service": "session-db",
+          "pod": "session-db-0",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "score": 0.109707,
+          "rationale": "Direct evidence indicates a sharp, concurrent isolated spike in both network_rx (peak ~16.8 KB/s, z-score ~111.7) and network_tx (peak ~21.9 KB/s, z-score ~13.95) at 10:49:00. While network traffic surges can occasionally reflect retransmissions or latency-related buffering/queuing delays under degraded network conditions, there are no direct latency metrics or packet drop observations to confirm network delay.",
+          "supporting_evidence": [
+            "e1: network_rx increased sharply to a peak of 16759.67 bytes/sec (z-score 111.69) at 2026-03-18T10:49:00+00:00",
+            "e2: network_tx increased to a peak of 21915.73 bytes/sec (z-score 13.95) at 2026-03-18T10:49:00+00:00"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Missing trace latency or round-trip time measurements between front-end and session-db-0",
+            "Missing TCP retransmission and timeout counters"
+          ]
+        },
+        {
+          "rank": 4,
+          "hypothesis_id": "pod:queue-master-5bb5566684-9gkdj:h1",
+          "entity_type": "pod",
+          "entity_name": "queue-master-5bb5566684-9gkdj",
+          "service": "queue-master",
+          "pod": "queue-master-5bb5566684-9gkdj",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "score": 0.075116,
+          "rationale": "The target pod displays a sharp, statistically significant spike in inbound network traffic (network_rx z-score 139.57, peaking at 11,983 bytes/sec) isolated to a single 1-minute bin. In a message-queue processing pod communicating with RabbitMQ, bursty incoming traffic or traffic retransmissions often accompany networking anomalies such as network delay or queue-draining flushes.",
+          "supporting_evidence": [
+            "network_rx experienced an isolated surge at 2026-03-18T10:50:00+00:00 with peak absolute value 11983.89 B/s and z-score 139.57 (e1)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Direct round-trip time, edge latency metrics, or TCP retransmission stats to confirm whether network delay induced queue buffering or message delivery delays."
+          ]
+        },
+        {
+          "rank": 5,
+          "hypothesis_id": "pod:shipping-66d8f78d5f-wknr9:h1",
+          "entity_type": "pod",
+          "entity_name": "shipping-66d8f78d5f-wknr9",
+          "service": "shipping",
+          "pod": "shipping-66d8f78d5f-wknr9",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "score": 0.057412,
+          "rationale": "Direct evidence e1 demonstrates an isolated surge in network_rx (peaking at ~14.3 KB/s, z-score ~74.2) at 10:52:00, which temporally aligns with an isolated p95/p99 latency spike observed upstream on orders-94d48dc8-prbdt (e5). While this could reflect delayed transmissions or bursts of network traffic, direct evidence does not show local latency degradation or packet retransmissions.",
+          "supporting_evidence": [
+            "e1: network_rx isolated spike at 2026-03-18T10:52:00 (peak=14286.9 B/s, zscore=74.19)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Missing direct round-trip or edge latency metrics for shipping-66d8f78d5f-wknr9",
+            "Missing TCP retransmit or trace latency data"
+          ]
+        },
+        {
+          "rank": 6,
+          "hypothesis_id": "pod:queue-master-5bb5566684-9gkdj:h2",
+          "entity_type": "pod",
+          "entity_name": "queue-master-5bb5566684-9gkdj",
+          "service": "queue-master",
+          "pod": "queue-master-5bb5566684-9gkdj",
+          "fault_type": "network_loss",
+          "local_rank": 2,
+          "score": 0.047149,
+          "rationale": "Intermittent packet loss on paths between queue-master and rabbitmq can manifest as sudden bursts of retransmitted traffic and compressed delivery windows once dropped packets are resent, resulting in brief spikes in received traffic (network_rx).",
+          "supporting_evidence": [
+            "network_rx spiked sharply for an isolated 1-minute period (e1)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Packet drop counts, TCP reset metrics, or request failure logs between queue-master and rabbitmq to distinguish packet loss from benign traffic bursts or network delay."
+          ]
+        },
+        {
+          "rank": 7,
+          "hypothesis_id": "pod:catalogue-58bdd4d4f9-48jpd:h2",
+          "entity_type": "pod",
+          "entity_name": "catalogue-58bdd4d4f9-48jpd",
+          "service": "catalogue",
+          "pod": "catalogue-58bdd4d4f9-48jpd",
+          "fault_type": "network_delay",
+          "local_rank": 2,
+          "score": 0.038179,
+          "rationale": "There is intermittent elevation in latency_p95 alongside an isolated spike in network_rx at 10:48:00. However, absolute latency remains low (peak abnormal value 9.32 ms, well within baseline ranges up to 23.56 ms), making network delay much less plausible as an initiating root cause.",
+          "supporting_evidence": [
+            "e3: latency_p95 intermittent anomaly (peak 8.60 ms, z-score 20.23)",
+            "e2: network_rx isolated spike at 10:48:00 peaking at 17712.90 bytes/sec"
+          ],
+          "contradictory_evidence": [
+            "e3: abnormal latency_p95 max of 9.32 ms is well within baseline maximum (23.56 ms), and overall mean abnormal latency is actually lower than baseline (-18.45%)"
+          ],
+          "evidence_gaps": [
+            "No packet drop, round-trip time, or downstream network metrics confirming injected delay on catalogue network edges"
+          ]
+        },
+        {
+          "rank": 8,
+          "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h1",
+          "entity_type": "pod",
+          "entity_name": "payment-664c4d4c74-xbjhf",
+          "service": "payment",
+          "pod": "payment-664c4d4c74-xbjhf",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "score": 0.036507,
+          "rationale": "A sharp, isolated burst in incoming network traffic (network_rx reaching 13,280 B/s with a z-score of 64.22) at 10:54:00 indicates an unexpected traffic spike, batching, or retried payload delivery often observed during network latency or buffering issues affecting the ingress path from upstream services.",
+          "supporting_evidence": [
+            "e1: Isolated network_rx spike at 2026-03-18T10:54:00+00:00 reaching 13280.82 bytes/sec (z-score 64.22, baseline mean 1843.71 bytes/sec)."
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Request duration or round-trip trace latency metrics on the orders-to-payment edge to verify transmission delay."
+          ]
+        },
+        {
+          "rank": 9,
+          "hypothesis_id": "pod:carts-5b77c45b65-ks75w:h1",
+          "entity_type": "pod",
+          "entity_name": "carts-5b77c45b65-ks75w",
+          "service": "carts",
+          "pod": "carts-5b77c45b65-ks75w",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "score": 0.032658,
+          "rationale": "Intermittent p99 latency spikes (peaking at ~48.2ms) are observed on the pod across 3 of 11 bins. Network delay is a plausible explanation for increased latency without documented process crashes or saturations.",
+          "supporting_evidence": [
+            "e1: latency_p99 intermittent increase in 3/11 1min bins, peak=48.18ms, peak z-score=765.89"
+          ],
+          "contradictory_evidence": [
+            "e1: Mean abnormal latency (27.90ms) is lower than baseline (31.70ms), and peak absolute latency (48.18ms) remains well within the baseline maximum range (76.5ms)."
+          ],
+          "evidence_gaps": [
+            "No network edge latency, TCP retransmission, or drop telemetry available to confirm network-induced delay."
+          ]
+        },
+        {
+          "rank": 10,
+          "hypothesis_id": "pod:carts-5b77c45b65-z9k6r:h1",
+          "entity_type": "pod",
+          "entity_name": "carts-5b77c45b65-z9k6r",
+          "service": "carts",
+          "pod": "carts-5b77c45b65-z9k6r",
+          "fault_type": "network_delay",
+          "local_rank": 1,
+          "score": 0.032041,
+          "rationale": "A burst in latency_p99 was observed starting at 10:55:00 (peak=39.75ms, z-score=457.17), indicating a potential transient communication or processing delay.",
+          "supporting_evidence": [
+            "e2: latency_p99 isolated increase at 10:55:00, peak=39.75ms, peak z-score=457.17"
+          ],
+          "contradictory_evidence": [
+            "e2: Abnormal latency values (peak 39.75ms, max 48.25ms) are well within the baseline maximum (96.31ms), with overall abnormal mean lower than baseline mean."
+          ],
+          "evidence_gaps": [
+            "Missing network edge metrics, round-trip times, and packet drop data."
+          ]
+        },
+        {
+          "rank": 11,
+          "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h2",
+          "entity_type": "pod",
+          "entity_name": "payment-664c4d4c74-xbjhf",
+          "service": "payment",
+          "pod": "payment-664c4d4c74-xbjhf",
+          "fault_type": "network_loss",
+          "local_rank": 2,
+          "score": 0.020872,
+          "rationale": "A sudden burst in received network traffic can stem from packet retransmissions or repeated request retries caused by intermittent network packet loss on incoming connections from orders.",
+          "supporting_evidence": [
+            "e1: network_rx surge to 13280.82 bytes/sec at 2026-03-18T10:54:00+00:00 (z-score 64.22) representing an abrupt 41.1% relative increase over baseline."
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "TCP retransmission rates, dropped packet counters, or client retry counts to distinguish loss-induced retries from normal traffic surges."
+          ]
+        },
+        {
+          "rank": 12,
+          "hypothesis_id": "pod:carts-5b77c45b65-z9k6r:h2",
+          "entity_type": "pod",
+          "entity_name": "carts-5b77c45b65-z9k6r",
+          "service": "carts",
+          "pod": "carts-5b77c45b65-z9k6r",
+          "fault_type": "cpu_stress",
+          "local_rank": 2,
+          "score": 0.020378,
+          "rationale": "A sudden tail latency spike at 10:55:00 could be caused by transient CPU scheduling delay or resource throttling.",
+          "supporting_evidence": [
+            "e2: latency_p99 anomaly detected at 10:55:00 with peak z-score=457.17"
+          ],
+          "contradictory_evidence": [
+            "No direct metric of high CPU utilization or container throttling is recorded."
+          ],
+          "evidence_gaps": [
+            "Missing container CPU metrics and throttling counters."
+          ]
+        },
+        {
+          "rank": 13,
+          "hypothesis_id": "pod:session-db-0:h2",
+          "entity_type": "pod",
+          "entity_name": "session-db-0",
+          "service": "session-db",
+          "pod": "session-db-0",
+          "fault_type": "network_loss",
+          "local_rank": 2,
+          "score": 0.019052,
+          "rationale": "The isolated spike in network throughput could potentially be associated with packet retransmissions or duplicate transfers following packet loss. However, evidence of actual drops, retries, or connection reset errors is absent.",
+          "supporting_evidence": [
+            "e1: network_rx isolated surge at 2026-03-18T10:49:00+00:00",
+            "e2: network_tx isolated surge at 2026-03-18T10:49:00+00:00"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Missing packet drop, TCP retry, or error rate metrics to establish packet loss"
+          ]
+        },
+        {
+          "rank": 14,
+          "hypothesis_id": "pod:shipping-66d8f78d5f-wknr9:h2",
+          "entity_type": "pod",
+          "entity_name": "shipping-66d8f78d5f-wknr9",
+          "service": "shipping",
+          "pod": "shipping-66d8f78d5f-wknr9",
+          "fault_type": "network_loss",
+          "local_rank": 2,
+          "score": 0.016204,
+          "rationale": "An isolated burst in incoming network traffic could indicate packet retransmission bursts or recovered message delivery attempts caused by intermittent packet loss. However, there are no recorded dropped packets, resets, or application errors confirming loss.",
+          "supporting_evidence": [
+            "e1: network_rx isolated spike at 2026-03-18T10:52:00 (peak=14286.9 B/s, zscore=74.19)"
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Missing packet drop, retry, or socket reset metrics for shipping-66d8f78d5f-wknr9"
+          ]
+        },
+        {
+          "rank": 15,
+          "hypothesis_id": "pod:orders-94d48dc8-prbdt:h2",
+          "entity_type": "pod",
+          "entity_name": "orders-94d48dc8-prbdt",
+          "service": "orders",
+          "pod": "orders-94d48dc8-prbdt",
+          "fault_type": "cpu_stress",
+          "local_rank": 2,
+          "score": 0.013019,
+          "rationale": "Intermittent CPU usage spikes were observed (peak 30.98%, z-score 23.52) during the window, but CPU usage remains well below quota/saturation levels (mean abnormal value 7.62%), making CPU stress less likely as the primary root cause.",
+          "supporting_evidence": [
+            "orders-94d48dc8-prbdt cpu_usage_pct increased intermittently in 2/11 bins peaking at 30.98%"
+          ],
+          "contradictory_evidence": [
+            "Absolute CPU usage remains low (mean abnormal 7.62%, peak 30.98%), showing no evidence of CPU quota throttling or saturation"
+          ],
+          "evidence_gaps": [
+            "CPU throttling metrics (container_cpu_cfs_throttled_periods_total)"
+          ]
+        },
+        {
+          "rank": 16,
+          "hypothesis_id": "pod:shipping-66d8f78d5f-9rcrc:h1",
+          "entity_type": "pod",
+          "entity_name": "shipping-66d8f78d5f-9rcrc",
+          "service": "shipping",
+          "pod": "shipping-66d8f78d5f-9rcrc",
+          "fault_type": "cpu_stress",
+          "local_rank": 1,
+          "score": 0.012794,
+          "rationale": "The target pod shipping-66d8f78d5f-9rcrc displays a slight window shift in cpu_usage_pct from 1.34% to 1.78% (peak 3.26%). However, absolute CPU utilization remains extremely low, indicating that genuine CPU exhaustion or throttling is not occurring. This is the only direct metric anomaly on the pod.",
+          "supporting_evidence": [
+            "cpu_usage_pct on shipping-66d8f78d5f-9rcrc shifted from 1.341% to 1.782% (z-score 1.052, peak 3.26%) between 10:45:30 and 10:55:45 (e1)."
+          ],
+          "contradictory_evidence": [
+            "Absolute CPU utilization maxes out at only 3.26%, far below any saturation or quota threshold that would cause performance degradation."
+          ],
+          "evidence_gaps": [
+            "CPU throttling metrics and container CPU quota saturation telemetry."
+          ]
+        },
+        {
+          "rank": 17,
+          "hypothesis_id": "pod:carts-5b77c45b65-ks75w:h2",
+          "entity_type": "pod",
+          "entity_name": "carts-5b77c45b65-ks75w",
+          "service": "carts",
+          "pod": "carts-5b77c45b65-ks75w",
+          "fault_type": "cpu_stress",
+          "local_rank": 2,
+          "score": 0.008929,
+          "rationale": "Elevated tail request latency can be driven by episodic CPU contention or quota throttling at the pod level.",
+          "supporting_evidence": [
+            "e1: latency_p99 elevated intermittently with high peak z-score (765.89)"
+          ],
+          "contradictory_evidence": [
+            "No direct CPU utilization or throttling metrics are reported showing CPU exhaustion."
+          ],
+          "evidence_gaps": [
+            "Missing CPU usage, saturation, and throttling metrics."
+          ]
+        },
+        {
+          "rank": 18,
+          "hypothesis_id": "pod:payment-664c4d4c74-xbjhf:h3",
+          "entity_type": "pod",
+          "entity_name": "payment-664c4d4c74-xbjhf",
+          "service": "payment",
+          "pod": "payment-664c4d4c74-xbjhf",
+          "fault_type": "exception_injection",
+          "local_rank": 3,
+          "score": 0.008519,
+          "rationale": "Application-level failure or malformed payload injection can produce atypical request patterns or rapid repeated failing calls from upstream services, manifesting locally as an isolated ingress burst.",
+          "supporting_evidence": [
+            "e1: Sudden 1-minute burst in network_rx at 2026-03-18T10:54:00+00:00 (peak z-score 64.22)."
+          ],
+          "contradictory_evidence": [],
+          "evidence_gaps": [
+            "Application error logs, HTTP response code distributions (e.g., 5xx rate), and trace exception details."
+          ]
+        }
+      ]
+    },
+    "refine_agent": {
+      "enabled": true,
+      "round_count": 0,
+      "query_budgets": {
+        "metric": {
+          "limit": 2,
+          "used": 0
+        },
+        "log": {
+          "limit": 2,
+          "used": 0
+        },
+        "trace": {
+          "limit": 2,
+          "used": 0
+        }
+      },
+      "history": []
+    },
+    "monolithic_agent": {
+      "enabled": false
+    },
+    "llm": {
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "context_policy": {
+        "hide_severity_diagnostics": true,
+        "hide_evidence_severity": false
+      },
+      "call_count": 24,
+      "successful_call_count": 24,
+      "failed_call_count": 0,
+      "retried_call_count": 2,
+      "prompt_tokens": 151636,
+      "output_tokens": 8550,
+      "thought_tokens": 0,
+      "cached_tokens": 0,
+      "total_tokens": 160186,
+      "reported_call_count": 24,
+      "unreported_call_count": 0,
+      "calls": [
+        {
+          "purpose": "hypothesis:pod:session-db-0",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 7.290949,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 3102,
+          "output_tokens": 542,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 3644
+        },
+        {
+          "purpose": "hypothesis:pod:queue-master-5bb5566684-9gkdj",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 10.038746,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 2539,
+          "output_tokens": 11,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 2550
+        },
+        {
+          "purpose": "hypothesis:pod:payment-664c4d4c74-xbjhf",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 10.08784,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 3479,
+          "output_tokens": 11,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 3490
+        },
+        {
+          "purpose": "hypothesis:service_batch:carts:b1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 13.218001,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 3513,
+          "output_tokens": 844,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 4357
+        },
+        {
+          "purpose": "hypothesis:pod:orders-94d48dc8-prbdt",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 16.597999,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 4782,
+          "output_tokens": 446,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 5228
+        },
+        {
+          "purpose": "hypothesis:pod:catalogue-58bdd4d4f9-48jpd",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 16.771532,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 3963,
+          "output_tokens": 500,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 4463
+        },
+        {
+          "purpose": "hypothesis:service_batch:user:b1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 20.315104,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 3969,
+          "output_tokens": 62,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 4031
+        },
+        {
+          "purpose": "hypothesis:pod:payment-664c4d4c74-xbjhf:coverage_review",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 11.1069,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 2624,
+          "output_tokens": 612,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 3236
+        },
+        {
+          "purpose": "hypothesis:service_batch:shipping:b1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 21.469986,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 4048,
+          "output_tokens": 89,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 4137
+        },
+        {
+          "purpose": "hypothesis:pod:queue-master-5bb5566684-9gkdj:coverage_review",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 15.414179,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 2634,
+          "output_tokens": 417,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 3051
+        },
+        {
+          "purpose": "hypothesis:pod:shipping-66d8f78d5f-9rcrc",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 6.016651,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 3497,
+          "output_tokens": 244,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 3741
+        },
+        {
+          "purpose": "hypothesis:pod:user-5c64496568-7jpx8",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 8.747444,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 3097,
+          "output_tokens": 11,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 3108
+        },
+        {
+          "purpose": "hypothesis:pod:user-5c64496568-xj5vk",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 4.200814,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 3324,
+          "output_tokens": 11,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 3335
+        },
+        {
+          "purpose": "hypothesis:pod:shipping-66d8f78d5f-wknr9",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 11.664176,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 3703,
+          "output_tokens": 462,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 4165
+        },
+        {
+          "purpose": "rank:global_listwise",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 22.685349,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 14726,
+          "output_tokens": 84,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 14810
+        },
+        {
+          "purpose": "rank:pairwise:pass1:batch1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 11.777801,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 15788,
+          "output_tokens": 1404,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 17192
+        },
+        {
+          "purpose": "rank:pairwise:pass2:batch1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 27.340669,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 15788,
+          "output_tokens": 1404,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 17192
+        },
+        {
+          "purpose": "rank:pairwise:recovery1:batch1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 27.119743,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 4428,
+          "output_tokens": 61,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 4489
+        },
+        {
+          "purpose": "rank:pairwise:anchor_round1:pass1:batch1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 6.637265,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 13043,
+          "output_tokens": 454,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 13497
+        },
+        {
+          "purpose": "rank:pairwise:anchor_round1:pass2:batch1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 3,
+          "elapsed_sec": 174.185942,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 13043,
+          "output_tokens": 452,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 13495
+        },
+        {
+          "purpose": "rank:pairwise:anchor_round2:pass1:batch1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 5.055247,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 7784,
+          "output_tokens": 130,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 7914
+        },
+        {
+          "purpose": "rank:pairwise:anchor_round2:pass2:batch1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 2,
+          "elapsed_sec": 104.527742,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 7784,
+          "output_tokens": 88,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 7872
+        },
+        {
+          "purpose": "rank:guarded_bt:pass2",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 4.653765,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 5489,
+          "output_tokens": 96,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 5585
+        },
+        {
+          "purpose": "rank:guarded_bt:pass1",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash",
+          "status": "ok",
+          "attempts": 1,
+          "elapsed_sec": 42.551314,
+          "error": null,
+          "usage_reported": true,
+          "prompt_tokens": 5489,
+          "output_tokens": 115,
+          "thought_tokens": 0,
+          "cached_tokens": 0,
+          "total_tokens": 5604
+        }
+      ]
+    },
+    "dataset_provenance": {
+      "case_id": "pod_memory_hog_catalogue_001",
+      "case_index": 33,
+      "fault_workload_metadata": "dataset_v2/fault_run_0318/pod_memory_hog_catalogue_001/workload/workload_metadata.json",
+      "normal_run_id": "normal_bca2kx",
+      "normal_workload_metadata": "dataset_v2/normal_run_0318/normal_bca2kx/workload/workload_metadata.json",
+      "normal_selection": "same_duration_nearest_in_time",
+      "trim_workload_ramp": true
+    },
+    "telemetry_input": {
+      "mode": "frozen_hourly_csv",
+      "telemetry_dir": "dataset_v2/telemetry/2026_03_18",
+      "inputs": {
+        "metrics_baseline": {
+          "rows": 35747,
+          "partitions": [
+            "dataset_v2/telemetry/2026_03_18/metrics/prometheus_metrics_KPI_05.csv",
+            "dataset_v2/telemetry/2026_03_18/metrics/prometheus_metrics_KPI_06.csv"
+          ]
+        },
+        "metrics_abnormal": {
+          "rows": 35461,
+          "partitions": [
+            "dataset_v2/telemetry/2026_03_18/metrics/prometheus_metrics_KPI_10.csv"
+          ]
+        },
+        "logs_baseline": {
+          "rows": 30407,
+          "partitions": [
+            "dataset_v2/telemetry/2026_03_18/logs/loki_logs_parsed_05.csv",
+            "dataset_v2/telemetry/2026_03_18/logs/loki_logs_parsed_06.csv"
+          ]
+        },
+        "logs_abnormal": {
+          "rows": 31328,
+          "partitions": [
+            "dataset_v2/telemetry/2026_03_18/logs/loki_logs_parsed_10.csv"
+          ]
+        },
+        "traces_baseline": {
+          "rows": 74763,
+          "partitions": [
+            "dataset_v2/telemetry/2026_03_18/traces/jaeger_traces_parsed_05.csv",
+            "dataset_v2/telemetry/2026_03_18/traces/jaeger_traces_parsed_06.csv"
+          ]
+        },
+        "traces_abnormal": {
+          "rows": 78179,
+          "partitions": [
+            "dataset_v2/telemetry/2026_03_18/traces/jaeger_traces_parsed_10.csv"
+          ]
+        }
+      }
+    },
+    "timing": {
+      "total_wall_time_sec": 483.988097,
+      "external_telemetry_time_sec": 0.0,
+      "internal_algorithm_time_sec": 46.374613,
+      "llm_time_sec": 437.613484,
+      "llm_cumulative_call_time_sec": 599.475158,
+      "llm_transport_time_sec": 510.907929,
+      "llm_retry_client_overhead_sec": 88.567229,
+      "algorithm_plus_llm_time_sec": 483.988097,
+      "tracker": {
+        "totals_sec": {
+          "llm": 510.907929,
+          "llm_logical": 599.475158
+        },
+        "counts": {
+          "llm": 27,
+          "llm_logical": 24
+        },
+        "details_sec": {
+          "llm": {
+            "hypothesis:pod:catalogue-58bdd4d4f9-48jpd": 4.75136,
+            "hypothesis:pod:orders-94d48dc8-prbdt": 6.578154,
+            "hypothesis:pod:payment-664c4d4c74-xbjhf": 2.072593,
+            "hypothesis:pod:payment-664c4d4c74-xbjhf:coverage_review": 7.17694,
+            "hypothesis:pod:queue-master-5bb5566684-9gkdj": 4.028873,
+            "hypothesis:pod:queue-master-5bb5566684-9gkdj:coverage_review": 9.432758,
+            "hypothesis:pod:session-db-0": 5.288798,
+            "hypothesis:pod:shipping-66d8f78d5f-9rcrc": 5.163934,
+            "hypothesis:pod:shipping-66d8f78d5f-wknr9": 11.66062,
+            "hypothesis:pod:user-5c64496568-7jpx8": 8.743894,
+            "hypothesis:pod:user-5c64496568-xj5vk": 3.774678,
+            "hypothesis:service_batch:carts:b1": 12.014946,
+            "hypothesis:service_batch:shipping:b1": 17.463836,
+            "hypothesis:service_batch:user:b1": 2.294223,
+            "rank:global_listwise": 22.679411,
+            "rank:guarded_bt:pass1": 42.545405,
+            "rank:guarded_bt:pass2": 2.651525,
+            "rank:pairwise:anchor_round1:pass1:batch1": 6.631152,
+            "rank:pairwise:anchor_round1:pass2:batch1": 166.171791,
+            "rank:pairwise:anchor_round2:pass1:batch1": 5.050803,
+            "rank:pairwise:anchor_round2:pass2:batch1": 100.523718,
+            "rank:pairwise:pass1:batch1": 11.7231,
+            "rank:pairwise:pass2:batch1": 25.368826,
+            "rank:pairwise:recovery1:batch1": 27.11659
+          },
+          "llm_logical": {
+            "hypothesis:pod:catalogue-58bdd4d4f9-48jpd": 16.771532,
+            "hypothesis:pod:orders-94d48dc8-prbdt": 16.597999,
+            "hypothesis:pod:payment-664c4d4c74-xbjhf": 10.08784,
+            "hypothesis:pod:payment-664c4d4c74-xbjhf:coverage_review": 11.1069,
+            "hypothesis:pod:queue-master-5bb5566684-9gkdj": 10.038746,
+            "hypothesis:pod:queue-master-5bb5566684-9gkdj:coverage_review": 15.414179,
+            "hypothesis:pod:session-db-0": 7.290949,
+            "hypothesis:pod:shipping-66d8f78d5f-9rcrc": 6.016651,
+            "hypothesis:pod:shipping-66d8f78d5f-wknr9": 11.664176,
+            "hypothesis:pod:user-5c64496568-7jpx8": 8.747444,
+            "hypothesis:pod:user-5c64496568-xj5vk": 4.200814,
+            "hypothesis:service_batch:carts:b1": 13.218001,
+            "hypothesis:service_batch:shipping:b1": 21.469986,
+            "hypothesis:service_batch:user:b1": 20.315104,
+            "rank:global_listwise": 22.685349,
+            "rank:guarded_bt:pass1": 42.551314,
+            "rank:guarded_bt:pass2": 4.653765,
+            "rank:pairwise:anchor_round1:pass1:batch1": 6.637265,
+            "rank:pairwise:anchor_round1:pass2:batch1": 174.185942,
+            "rank:pairwise:anchor_round2:pass1:batch1": 5.055247,
+            "rank:pairwise:anchor_round2:pass2:batch1": 104.527742,
+            "rank:pairwise:pass1:batch1": 11.777801,
+            "rank:pairwise:pass2:batch1": 27.340669,
+            "rank:pairwise:recovery1:batch1": 27.119743
+          }
+        },
+        "detail_counts": {
+          "llm": {
+            "hypothesis:pod:catalogue-58bdd4d4f9-48jpd": 1,
+            "hypothesis:pod:orders-94d48dc8-prbdt": 1,
+            "hypothesis:pod:payment-664c4d4c74-xbjhf": 1,
+            "hypothesis:pod:payment-664c4d4c74-xbjhf:coverage_review": 1,
+            "hypothesis:pod:queue-master-5bb5566684-9gkdj": 1,
+            "hypothesis:pod:queue-master-5bb5566684-9gkdj:coverage_review": 1,
+            "hypothesis:pod:session-db-0": 1,
+            "hypothesis:pod:shipping-66d8f78d5f-9rcrc": 1,
+            "hypothesis:pod:shipping-66d8f78d5f-wknr9": 1,
+            "hypothesis:pod:user-5c64496568-7jpx8": 1,
+            "hypothesis:pod:user-5c64496568-xj5vk": 1,
+            "hypothesis:service_batch:carts:b1": 1,
+            "hypothesis:service_batch:shipping:b1": 1,
+            "hypothesis:service_batch:user:b1": 1,
+            "rank:global_listwise": 1,
+            "rank:guarded_bt:pass1": 1,
+            "rank:guarded_bt:pass2": 1,
+            "rank:pairwise:anchor_round1:pass1:batch1": 1,
+            "rank:pairwise:anchor_round1:pass2:batch1": 3,
+            "rank:pairwise:anchor_round2:pass1:batch1": 1,
+            "rank:pairwise:anchor_round2:pass2:batch1": 2,
+            "rank:pairwise:pass1:batch1": 1,
+            "rank:pairwise:pass2:batch1": 1,
+            "rank:pairwise:recovery1:batch1": 1
+          },
+          "llm_logical": {
+            "hypothesis:pod:catalogue-58bdd4d4f9-48jpd": 1,
+            "hypothesis:pod:orders-94d48dc8-prbdt": 1,
+            "hypothesis:pod:payment-664c4d4c74-xbjhf": 1,
+            "hypothesis:pod:payment-664c4d4c74-xbjhf:coverage_review": 1,
+            "hypothesis:pod:queue-master-5bb5566684-9gkdj": 1,
+            "hypothesis:pod:queue-master-5bb5566684-9gkdj:coverage_review": 1,
+            "hypothesis:pod:session-db-0": 1,
+            "hypothesis:pod:shipping-66d8f78d5f-9rcrc": 1,
+            "hypothesis:pod:shipping-66d8f78d5f-wknr9": 1,
+            "hypothesis:pod:user-5c64496568-7jpx8": 1,
+            "hypothesis:pod:user-5c64496568-xj5vk": 1,
+            "hypothesis:service_batch:carts:b1": 1,
+            "hypothesis:service_batch:shipping:b1": 1,
+            "hypothesis:service_batch:user:b1": 1,
+            "rank:global_listwise": 1,
+            "rank:guarded_bt:pass1": 1,
+            "rank:guarded_bt:pass2": 1,
+            "rank:pairwise:anchor_round1:pass1:batch1": 1,
+            "rank:pairwise:anchor_round1:pass2:batch1": 1,
+            "rank:pairwise:anchor_round2:pass1:batch1": 1,
+            "rank:pairwise:anchor_round2:pass2:batch1": 1,
+            "rank:pairwise:pass1:batch1": 1,
+            "rank:pairwise:pass2:batch1": 1,
+            "rank:pairwise:recovery1:batch1": 1
+          }
+        }
+      }
+    },
+    "experiment": {
+      "name": "baseline",
+      "dataset_tag": "0318",
+      "pairwise_enabled": true,
+      "ranking_aggregation": "regularized_bradley_terry",
+      "hide_evidence_severity_from_llm": false,
+      "refine_agent_enabled": true,
+      "workflow_mode": "multi_agent"
+    }
+  }
+}

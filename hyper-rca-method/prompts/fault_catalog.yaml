@@ -1,0 +1,113 @@
+version: sockshop-v1
+
+# This catalog gives the Hypothesis Agent portable diagnostic knowledge. The
+# manifestations below are contextual clues, not necessary/sufficient rules or
+# evidence-to-label mappings.
+guidance: >-
+  Consider every category against the supplied evidence. Typical manifestations
+  may support a category, but no individual signal proves or excludes it. Use
+  contradictory evidence and propagation context when distinguishing categories.
+
+fault_types:
+  - id: cpu_stress
+    name: CPU stress
+    description: >-
+      Excessive CPU demand, CPU contention, or CPU quota throttling at the target
+      pod causes it to execute work too slowly.
+    typical_manifestations:
+      - Elevated or bursty CPU usage and possible CPU throttling at the target.
+      - Local processing latency can rise before latency propagates to callers.
+    differential_considerations:
+      - Separate local CPU pressure from latency inherited from a slow dependency.
+      - A large deviation score without high absolute utilization or throttling does not establish CPU exhaustion.
+      - CPU growth that begins mainly after a restart or readiness transition may be a recovery consequence.
+
+  - id: memory_stress
+    name: Memory stress
+    description: >-
+      Memory pressure, rapid working-set growth, allocation pressure, or an
+      out-of-memory condition degrades or terminates the target pod.
+    typical_manifestations:
+      - Elevated or increasing memory usage, allocation failures, OOM messages, or restarts.
+      - Latency and availability may degrade as memory pressure becomes severe.
+    differential_considerations:
+      - Separate sustained memory pressure from a generic pod crash with no memory evidence.
+      - A large deviation from a low baseline does not establish memory exhaustion without high absolute usage, growth, allocation failure, or OOM evidence.
+      - Memory growth that begins mainly after a restart or recovery may be a consequence rather than the trigger.
+
+  - id: pod_failure
+    name: Pod failure
+    description: >-
+      A pod becomes unavailable because its process crashes, exits, restarts, or
+      fails readiness/liveness, independently of a more specific supported cause.
+    typical_manifestations:
+      - Restart growth, readiness loss, process termination, or abrupt telemetry gaps.
+      - Callers may observe connection failures, timeouts, and reduced success rate.
+    differential_considerations:
+      - Separate a failed process from an alive but network-isolated pod.
+      - Treat pod failure as the generic availability mechanism only when a more specific, temporally aligned trigger is not supported.
+      - Once restart/readiness-loss evidence establishes unavailability, a missing exit reason explains the trigger but does not weaken the pod-failure diagnosis.
+      - Resource pressure that begins mainly after restart or recovery may be a consequence rather than the initiating fault.
+      - Repeated local connectivity failures to independent application and control-plane destinations may explain readiness loss and favor a network trigger over generic pod failure.
+
+  - id: exception_injection
+    name: Exception injection
+    description: >-
+      The application executes a failing code path or raises application-level
+      exceptions, producing incorrect or failed requests while the pod may remain alive.
+    typical_manifestations:
+      - New exception or stack-trace logs and elevated application error responses.
+      - Failures often originate at one service and propagate to its callers.
+    differential_considerations:
+      - Separate locally raised exceptions from upstream logs that merely report a dependency failure.
+
+  - id: io_fault
+    name: I/O fault
+    description: >-
+      Slow or failed filesystem, block-device, or persistent-storage operations
+      delay or prevent the target from completing local work.
+    typical_manifestations:
+      - I/O-related errors, operation timeouts, or increased latency around storage activity.
+      - Request latency can rise without corresponding CPU saturation.
+    differential_considerations:
+      - Separate local storage I/O from network delay to a remote database or service.
+
+  - id: network_delay
+    name: Network delay
+    description: >-
+      Communication remains possible, but added network latency delays requests or
+      responses on paths involving the target.
+    typical_manifestations:
+      - Increased trace-edge or request latency, sometimes with timeouts and retries.
+      - Success may remain possible even while tail latency rises substantially.
+    differential_considerations:
+      - Separate path delay from slow application processing at an endpoint.
+      - Latency alone is not specific to a communication mechanism; check request outcomes, trace failures, retries, resets, drops, and endpoint processing evidence.
+
+  - id: network_loss
+    name: Network loss
+    description: >-
+      Intermittent packet or request loss disrupts communication and causes partial,
+      inconsistent failures rather than stable added latency alone.
+    typical_manifestations:
+      - Retries, resets, missing responses, increased error rate, or reduced success rate.
+      - Some requests may still succeed while others fail or time out.
+    differential_considerations:
+      - Separate intermittent loss from sustained isolation and from a crashed pod.
+      - Mixed successes and failures, retries, resets, or packet drops support loss more specifically than a contiguous multi-destination outage.
+      - Latency without intermittent delivery failures does not establish packet or request loss.
+
+  - id: network_partition
+    name: Network partition
+    description: >-
+      A sustained connectivity break isolates a pod or service from some or all of
+      its peers even though the isolated process may continue running.
+    typical_manifestations:
+      - Near-total communication failure or sustained missing connectivity across affected edges.
+      - Multiple peers may consistently fail to reach the isolated target.
+      - Local socket, DNS, or connection failures may span independent application and control-plane destinations during one coherent outage episode.
+    differential_considerations:
+      - Separate isolation from intermittent loss, high latency, and process termination.
+      - Sustained refers to continuity within the bounded incident episode; recovery later in the analysis window does not refute a temporary partition.
+      - Readiness loss, telemetry interruption, or restart can be consequences of isolation rather than independent evidence that pod failure initiated the incident.
+      - A single DNS failure may be destination-specific; repeated local socket or DNS failures across independent destinations provide stronger isolation evidence.

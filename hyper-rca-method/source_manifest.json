@@ -1,0 +1,64 @@
+{
+  "snapshot_date": "2026-11-21",
+  "source_project": "LLM_agent_skills_v2",
+  "prompts": [
+    {
+      "template": "hypothesis",
+      "file": "src/rca_agent_skills/agents/hypothesis_agent.py",
+      "symbol": "SYSTEM_PROMPT",
+      "line": 17,
+      "source_sha256": "ed20cc7482c941e1e8de8bbddeb217b7f7fce6a76085276a8c11e7511bb7d0e3",
+      "payload_builder": "HypothesisAgent._payload"
+    },
+    {
+      "template": "hypothesis_batch",
+      "file": "src/rca_agent_skills/agents/hypothesis_agent.py",
+      "symbol": "SYSTEM_PROMPT",
+      "line": 17,
+      "source_sha256": "ed20cc7482c941e1e8de8bbddeb217b7f7fce6a76085276a8c11e7511bb7d0e3",
+      "payload_builder": "HypothesisAgent._batch_payload"
+    },
+    {
+      "template": "listwise",
+      "file": "src/rca_agent_skills/agents/rank_agent.py",
+      "symbol": "LISTWISE_SYSTEM_PROMPT",
+      "line": 20,
+      "source_sha256": "4b3ea65782d8d0addc6ea7aecf451e78300353b5765285097ddb342f8f6d4d75",
+      "payload_builder": "RankAgent._coarse_rank"
+    },
+    {
+      "template": "pairwise",
+      "file": "src/rca_agent_skills/agents/rank_agent.py",
+      "symbol": "PAIRWISE_SYSTEM_PROMPT",
+      "line": 52,
+      "source_sha256": "4b3ea65782d8d0addc6ea7aecf451e78300353b5765285097ddb342f8f6d4d75",
+      "payload_builder": "RankAgent._judge_pair_batch"
+    },
+    {
+      "template": "guarded_bt",
+      "file": "src/rca_agent_skills/agents/rank_agent.py",
+      "symbol": "GUARDED_BT_SYSTEM_PROMPT",
+      "line": 89,
+      "source_sha256": "4b3ea65782d8d0addc6ea7aecf451e78300353b5765285097ddb342f8f6d4d75",
+      "payload_builder": "RankAgent._guarded_bt_adjudication"
+    },
+    {
+      "template": "refine",
+      "file": "src/rca_agent_skills/refinement/agent.py",
+      "symbol": "SYSTEM_PROMPT",
+      "line": 21,
+      "source_sha256": "b0b485c6e2f5babea0c4bfbdbba83368da12cba3d20f6c30009beb481e5b56f3",
+      "payload_builder": "RefineAgent._payload"
+    }
+  ],
+  "fault_catalog": {
+    "file": "configs/fault_types.yaml",
+    "sha256": "f00d7874564fa773aec521201b46f088fec9558eaab7c3d1e8a5fbc9ae61e9c7"
+  },
+  "llm_client_sha256": "cd1430479c1e1cf74f3a6f1fcae5036d2bd48d450970b39248e528e45ec238c3",
+  "case_source_sha256": "74548f7a2c05d68a228678279f0e8fd5bb861479afe66dd225c423b14632e7bc",
+  "case_report_source_sha256": "71b43996ed2bc0e48e6aafe93d7284d3fc5567425e5d63c16fd0a007b393d096",
+  "ground_truth_source_sha256": "10f019be31d08c3ee597215cc96d654b40343ceb7f4c4126bd2a2c0f1a092d10",
+  "raw_example_log_sha256": "ae469f4773ac5ba6ba2f1bc4594151d7a425206f12138576f77b18b8bfc122ef",
+  "claims": "Current template snapshot, saved parsed case results and one legacy raw I/O sample have deliberately separate provenance."
+}

@@ -1,0 +1,83 @@
+{
+  "artifact_kind": "current_template_scaffold_not_a_historical_request",
+  "snapshot_date": "2026-11-21",
+  "source": {
+    "file": "src/rca_agent_skills/refinement/agent.py",
+    "symbol": "SYSTEM_PROMPT",
+    "line": 21,
+    "source_sha256": "b0b485c6e2f5babea0c4bfbdbba83368da12cba3d20f6c30009beb481e5b56f3",
+    "payload_builder": "RefineAgent._payload"
+  },
+  "system_instruction": "You are the Refine Agent in a microservice RCA workflow.\nPlan a small number of targeted observations that can distinguish the supplied competing\n(Pod, fault type) hypotheses. Use the referenced evidence, relevant fault catalog,\ntopology, and metric knowledge to identify missing discriminators. Return only\nbackend-independent query sketches, never Python, Pandas, SQL, PromQL, LogQL, shell\ncommands, or other executable text.\n\nFault descriptions and metric_knowledge are contextual guidance, not deterministic\nevidence-to-fault mappings. Metric knowledge may be stale; active_metric_schema and later\nschema grounding determine whether a metric, label, entity binding, and operation are\navailable. Do not invent availability or bindings. Use a semantic signal_family and add\nmetric_hints only when the supplied knowledge or active schema supports them. For logs,\nrequest bounded diagnostic levels or keywords. For traces, specify an allowed entity and\nan optional topology peer. On a directed edge, entity is the caller and peer_service is\nthe callee; inspect incoming calls through the listed upstream caller.\n\nEvery query must state which hypotheses it can distinguish and must target an allowed\nentity and an available modality. Prefer missing, mechanism-discriminating observations\nover evidence already present. Empty or unavailable telemetry is not proof of normal\nbehavior. Node- or instance-scoped measurements are shared context and cannot alone\nlocalize a Pod fault. Do not decide the final root cause, generate numeric confidence\nscores, or use dataset labels, fault injection metadata, or ground truth.\nReturn valid JSON only.",
+  "payload_template": {
+    "task": "Plan hypothesis-discriminative telemetry acquisition.",
+    "competing_hypotheses": "<selected competing hypotheses>",
+    "evidence_catalog": "<referenced evidence records>",
+    "relevant_fault_catalog_entries": "<relevant catalog entries>",
+    "available_entities": {
+      "pods": [
+        "<allowed Pod>"
+      ],
+      "services": [
+        "<allowed service>"
+      ]
+    },
+    "topology": "<bounded topology>",
+    "available_telemetry_modalities": [
+      "metric",
+      "log",
+      "trace"
+    ],
+    "remaining_query_budget_by_modality": "<remaining counts>",
+    "metric_knowledge": "<retrieved entries, concepts, diagnostic bundles>",
+    "active_metric_schema": "<verified metric names, labels, types, scopes>",
+    "pod_to_metric_instance_bindings": "<verified bindings>",
+    "supported_metric_operations": [
+      "average",
+      "maximum",
+      "minimum",
+      "sum",
+      "percentile",
+      "rate",
+      "increase"
+    ],
+    "supported_trace_operations": [
+      "trace_latency",
+      "trace_failure_rate"
+    ],
+    "query_budget_this_round": 4,
+    "instructions": "<runtime schema, scope and budget constraints>",
+    "output_shape": {
+      "queries": [
+        {
+          "objective": "what this query distinguishes",
+          "target_hypothesis_ids": [
+            "existing hypothesis id"
+          ],
+          "modality": "metric|log|trace",
+          "entity_type": "pod|service",
+          "entity": "exact listed entity",
+          "signal_family": "backend-independent diagnostic signal",
+          "operation": "supported operation",
+          "aggregation": "average|maximum|minimum|sum",
+          "metric_hints": [
+            "optional likely Prometheus names"
+          ],
+          "label_filters": {
+            "optional exact active label key": [
+              "verified value"
+            ]
+          },
+          "log_levels": [
+            "ERROR"
+          ],
+          "keywords": [
+            "optional diagnostic term"
+          ],
+          "peer_service": "optional topology peer",
+          "percentile": 0.95
+        }
+      ]
+    }
+  }
+}
