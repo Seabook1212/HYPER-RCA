@@ -50,7 +50,7 @@ For details, see [`sockshop-rca-benchmark/README.md`](sockshop-rca-benchmark/REA
 
 ## Dataset
 
-- Released dataset folder: [Google Drive](https://drive.google.com/drive/folders/1dBNDc2YUYyjJch_BmhO-Hx-0YvdPHHl_?usp=drive_link)
+- Released dataset folder: [Hugging Face](https://huggingface.co/datasets/Seabook1111/EnhancedSockShopBench/tree/main)
 
 ## Dataset Documentation and License
 

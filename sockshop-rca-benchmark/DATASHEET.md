@@ -36,8 +36,8 @@ Metric-name inventories include collection candidates; availability varies by ru
 
 ## Files, time, and labels
 
-The [dataset download](https://drive.google.com/drive/folders/1dBNDc2YUYyjJch_BmhO-Hx-0YvdPHHl_?usp=drive_link)
-contains fault/normal run directories (e.g., `fault_run_0313`, `normal_run_0313`)
+The [dataset download](https://huggingface.co/datasets/Seabook1111/EnhancedSockShopBench/tree/main)
+contains fault/normal run directories (e.g., `fault_run_0603`, `normal_run_0603`)
 and `telemetry/<date>/`.
 
 - CSV telemetry contains metric values and labels, log messages, and trace spans

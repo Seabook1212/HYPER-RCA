@@ -47,16 +47,16 @@
     "service_fault",
     "pod_fault"
   ],
-  "dataset_url": "https://drive.google.com/drive/folders/1dBNDc2YUYyjJch_BmhO-Hx-0YvdPHHl_?usp=drive_link",
+  "dataset_url": "https://huggingface.co/datasets/Seabook1111/EnhancedSockShopBench/tree/main",
   "dataset_payload_status": "Full raw telemetry archives and full case-level metadata are distributed through the released dataset folder rather than duplicated directly in this Git repository.",
   "ground_truth_source": "Fault labels are derived from each case's structured fault_metadata.json when the full dataset is available.",
   "metric_count_scope": "Reported distinct metric names, excluding entity and label combinations; inventories may also contain collection candidates.",
   "collection_dates": [
-    "2026-03-12",
-    "2026-03-13",
-    "2026-03-14",
-    "2026-03-17",
-    "2026-03-18"
+    "2026-06-03",
+    "2026-06-05",
+    "2026-06-07",
+    "2026-06-09",
+    "2026-06-11"
   ],
   "data_license": "CC-BY-4.0",
   "data_license_file": "../../LICENSE-DATA",

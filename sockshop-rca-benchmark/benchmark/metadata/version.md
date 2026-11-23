@@ -38,9 +38,7 @@ This metadata describes the EnhancedSockShopBench package associated with HYPER-
 
 ## Dataset Release Notes
 
-Full raw telemetry archives and case-level metadata are distributed through the released dataset folder rather than duplicated directly in this Git repository:
-
-https://drive.google.com/drive/folders/1dBNDc2YUYyjJch_BmhO-Hx-0YvdPHHl_?usp=drive_link
+https://huggingface.co/datasets/Seabook1111/EnhancedSockShopBench/tree/main
 
 Case labels are derived from structured `fault_metadata.json` files and workload windows are derived from `workload_metadata.json`.
 

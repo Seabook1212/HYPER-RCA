@@ -87,7 +87,7 @@ RCA methods should use the workload and fault timestamps to select case-specific
 
 ## Dataset
 
-Released dataset folder: [Google Drive](https://drive.google.com/drive/folders/1dBNDc2YUYyjJch_BmhO-Hx-0YvdPHHl_?usp=drive_link)
+Released dataset: [Hugging Face](https://huggingface.co/datasets/Seabook1111/EnhancedSockShopBench/tree/main)
 
 The committed files document and reproduce the benchmark construction and evaluation pipeline, while the dataset folder provides the large telemetry payloads and case-level metadata used by the benchmark.
 
